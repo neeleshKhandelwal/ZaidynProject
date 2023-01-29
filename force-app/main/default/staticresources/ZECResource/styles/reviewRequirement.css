@@ -1,0 +1,39 @@
+.slds-form-element__control .slds-radio, .slds-form-element__control .slds-checkbox{
+    padding: 5px 0;
+}
+
+.slds-form-element__icon { 
+    padding-top:unset!important; 
+}
+.customPill .slds-pill {
+border: none!important;
+margin: 5px 5px 0 0!important;
+border-radius: 24px!important;
+padding: 0 6px 0 6px!important;
+color: #0952ca!important;
+background: #ecf8ff!important;
+font-weight: 600!important;
+}
+.customPill .slds-button__icon{
+	border-radius: 25px!important;
+    width: 12px!important;
+    height: 12px!important;
+    background: #0952ca!important;
+    color: #fff!important;
+    padding: 2px!important;
+}
+
+.customAccordion .slds-accordion__summary-content {
+    white-space: normal !important;
+}
+
+@media screen and  (min-width: 64em) {
+    .customAccordion .slds-accordion__summary-content {
+        white-space: normal !important;
+    }
+}
+/*Commented by kushal as it is impacting other pages. Please use the parent class to make it specific .slds-form-element__label{
+    font-family: sans-serif;
+    font-size: 14px;
+}
+*/

@@ -1,0 +1,8 @@
+.config-tabs ul {
+  border-bottom: none;
+}
+
+.THIS .slds-tabs--default__item.slds-active{
+     background: #27A6A4;
+     color: #27A6A4;
+}

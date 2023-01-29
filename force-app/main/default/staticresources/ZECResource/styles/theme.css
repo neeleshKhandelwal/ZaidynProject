@@ -1,0 +1,572 @@
+:root {
+    /*theme colors*/
+    --theme-color: #27a6a4;
+    --theme-bgcolor: #f0f0f0;
+    --theme-button-boarder-color: #D0DDE6;
+
+    --theme-color-light: #b2b0b6;
+    --theme-text-color-light: #716e79;
+    --theme-text-color-medium: #454250;
+    --theme-text-color-dark: #1a1628;
+    --theme-badge-color: #e3a900;
+    --theme-success-color: #00aa67;
+    --theme-error-color: #b21111;
+    --theme-warning-color: #e3a900;
+    --theme-progress-color: #0952ca;
+    --theme-success-badge-bgcolor: #f1feff;
+    --theme-warning-badge-bgcolor: #fff9f1;
+    --theme-progress-badge-bgcolor: #ecf8ff;
+    --theme-disable-color: #f4f3f3;
+    --theme-disable-icon-color: #2d8b93;
+    --theme-datatable-bgcolor: #fafafa;
+    --lwc-tabsFontWeight: bold;
+    --lwc-brandTextLink: #000000;
+    /* --lwc-colorBorderInputActive:rgb(255, 255, 255); */
+    /*chart colors*/
+}
+
+/*CSS defining theme properties of components*/
+.text_xx-small {
+    font-size: 0.625rem;
+    /*10px*/
+}
+
+.text_x-small {
+    font-size: 0.75rem;
+    /*12px*/
+}
+
+.text-color_light {
+    color: var(--theme-text-color-light);
+}
+
+.text-color_medium {
+    color: var(--theme-text-color-medium);
+}
+
+.text-color_dark {
+    color: var(--theme-text-color-dark);
+}
+
+.text_small {
+    font-size: 0.875rem;
+    /*14px*/
+}
+
+.text_medium {
+    font-size: 1rem;
+    /*16px*/
+}
+
+.text_x-medium {
+    font-size: 1.125rem;
+    /*16px*/
+}
+
+.text_large {
+    font-size: 1.25rem;
+    /*20px*/
+}
+
+.text_x-large {
+    font-size: 1.5rem;
+    /*24px*/
+}
+
+.text-xx-large {
+    font-size: 3rem;
+    /*48px*/
+}
+
+.text_bold {
+    font-weight: bold;
+}
+
+.text_normal {
+    font-weight: normal;
+}
+
+.dot_color_red {
+    background-color: #B21111;
+}
+
+.dot_color_blue {
+    background-color: #92B7E9;
+}
+
+.dot_color_grey {
+    background-color: #E2E2E2;
+}
+
+.dot_color_green {
+    background-color: #00AA67;
+}
+
+.dot_color_yellow {
+    background-color: #FF9836;
+}
+
+.obj_text-color {
+    color: #32A29B;
+}
+
+.obj_subtext-color {
+    color: #5B5864;
+}
+
+.obj_sectiontitle-color {
+    color: #53565A;
+}
+
+.card_text-color {
+    color: #2D535F;
+}
+
+.screen_bgcolor {
+    background: #F0F0F0;
+}
+
+.header_bgcolor {
+    background: #FFFFFF;
+}
+
+.comment_bgcolor {
+    background: #f7f7f7;
+}
+
+.search_bgcolor {
+    background: #2C7772;
+}
+
+.rate_color {
+    color: #8A640C;
+}
+
+.high-rate_color {
+    color: #65d332;
+}
+
+.low-rate_color {
+    color: #f0ab2a;
+}
+
+/* .refinement-input {
+    position: inherit !important;
+    padding-top: 0;
+    padding-right: 1rem;
+    padding-bottom: 0;
+    padding-left: var(--slds-c-input-spacing-horizontal-start, var(--sds-c-input-spacing-horizontal-start, var(--lwc-spacingSmall, 0.75rem)));
+    width: 100%;
+    min-height: calc(var(--lwc-heightInput, 1.875rem) + (var(--lwc-borderWidthThin, 1px) * 2));
+    line-height: var(--lwc-heightInput, 1.875rem);
+    border: var(--lwc-borderWidthThin, 1px) solid var(--slds-c-input-color-border, var(--sds-c-input-color-border, var(--lwc-colorBorderInput, #D4D4D4)));
+    border-radius: var(--slds-c-input-radius-border, var(--sds-c-input-radius-border, var(--lwc-borderRadiusMedium, 0.25rem)));
+    background-color: var(--slds-c-input-color-background, var(--sds-c-input-color-background, var(--lwc-colorBackgroundInput, rgb(255, 255, 255))));
+    color: var(--slds-c-input-text-color, var(--sds-c-input-text-color));
+    box-shadow: var(--slds-c-input-shadow, var(--sds-c-input-shadow));
+    transition: border var(--lwc-durationQuickly, 0.1s) linear, background-color var(--lwc-durationQuickly, 0.1s) linear;
+    display: inline-block;
+} */
+
+.refinement-input .slds-form-element__control {
+    position: inherit !important;
+}
+
+.slds-checkbox {
+    --sds-c-checkbox-color-border: var(--theme-color);
+    --sds-c-checkbox-color-background-checked: var(--theme-color);
+    --sds-c-checkbox-mark-color-foreground: white;
+    --sds-c-checkbox-color-border-focus: var(--theme-color);
+    --sds-c-checkbox-shadow: none;
+    --sds-c-checkbox-shadow-focus: none;
+    --sds-c-checkbox-radius-border: 0px;
+}
+
+.slds-checkbox:disabled {
+    --sds-c-checkbox-color-border: var(--theme-color) !important;
+    --sds-c-checkbox-color-background-checked: var(--theme-color) !important;
+    --sds-c-checkbox-mark-color-foreground: white !important;
+    --sds-c-checkbox-color-border-focus: var(--theme-color) !important;
+    --sds-c-checkbox-shadow: none !important;
+    --sds-c-checkbox-shadow-focus: none !important;
+    --sds-c-checkbox-radius-border: 0px !important;
+}
+
+.button_dark .slds-button {
+    background-color: var(--theme-color);
+    color: white;
+    border-radius: 0px;
+    font-size: 0.875rem;
+    text-align: center;
+    height: 2.5rem;
+    font-weight: 600;
+}
+
+.button_dark .slds-button:disabled {
+    opacity: 50%;
+}
+
+.button_light .slds-button {
+    background-color: #FFFFFF;
+    border: 1px solid var(--theme-color-light);
+    color: var(--theme-text-color-medium);
+    border-radius: 0px;
+    font-size: 0.875rem;
+    text-align: center;
+    height: 2.5rem;
+    font-weight: 600;
+}
+
+.button_light .slds-button:disabled {
+    opacity: 50%;
+}
+
+.button_link_dark .slds-button {
+    color: var(--theme-color);
+    /* font-size: 1rem; */
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+.button_link_dark .slds-button:disabled {
+    opacity: 0.3;
+}
+
+.button_link_dark_disabled .slds-button {
+    color: var(--theme-color);
+    font-size: 0.875rem;
+    font-weight: 600;
+    opacity: 0.3;
+}
+
+.slds-nav-vertical__item.slds-is-active .slds-nav-vertical__action {
+    box-shadow: inset 0.25rem 0 0 var(--theme-color);
+    color: var(--theme-color);
+}
+
+.button_submit .slds-button {
+    background-color: var(--theme-color);
+    color: var(--theme-datatable-bgcolor);
+    border-radius: 0px;
+    font-size: 13px;
+    text-align: center;
+    align-items: center;
+    height: 2rem;
+}
+
+
+
+.refinement-input .slds-form-element__control {
+    position: inherit !important;
+}
+
+.button_submit .slds-button:disabled {
+    opacity: 50%;
+}
+
+.slds-nav-vertical__item.slds-is-active .slds-nav-vertical__action {
+    box-shadow: inset 0.25rem 0 0 var(--theme-color);
+    color: var(--theme-color);
+}
+
+.viewAllRefinementsButtonClass .slds-button {
+    background-color: #1A1628;
+    justify-content: left;
+    color: #FFFFFF;
+    border-radius: 0px;
+    font-weight: 600;
+    font-size: 16px;
+    text-align: center;
+    height: 3.5rem;
+    /*width: 64px; /*4rem*/
+    line-height: 28px;
+}
+
+.button_create .slds-button {
+    background-color: #FFFFFF;
+    border: 1px solid #32A29B;
+    color: #32A29B;
+    border-radius: 0px;
+    font-size: 12px;
+    text-align: center;
+    height: 1.75rem;
+    /*width: 9rem;*/
+}
+
+.button_disabled .slds-button {
+    background-color: #F4F3F3;
+    border: 1px solid #E1E1E1;
+    color: #E1E1E1;
+    border-radius: 0px;
+    font-size: 12px;
+    text-align: center;
+    height: 1.75rem;
+}
+
+.button_save .slds-button {
+    background-color: #32A29B;
+    color: white;
+    border-radius: 0px;
+    font-size: 1rem;
+    text-align: center;
+    height: 2.5rem;
+    width: 4.3rem;
+    margin-right: 1rem;
+}
+
+.button_save_disabled .slds-button {
+    background-color: #bdbdb8;
+    color: white;
+    border-radius: 0px;
+    font-size: 1rem;
+    text-align: center;
+    height: 2.5rem;
+    width: 4.3rem;
+    margin-right: 1rem;
+}
+
+.button_yes .slds-button {
+    background-color: #32A29B;
+    color: white;
+    border-radius: 0px;
+    font-size: 0.75rem;
+    text-align: center;
+    height: 30px;
+    width: 45px;
+}
+
+.button_no .slds-button {
+    background-color: #FFFFFF;
+    color: var(--theme-text-color-medium);
+    border-radius: 0px;
+    font-size: 13px;
+    text-align: center;
+    align-items: center;
+    height: 2rem;
+}
+
+.no-focus .slds-button {
+    outline: none;
+    box-shadow: none;
+}
+
+/*layout for reviewer team health functionality*/
+.dot_large {
+    margin-top: 3px;
+    height: 12px;
+    width: 12px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.dot_small {
+    height: 8px;
+    width: 8px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.check_icon svg {
+    fill: #00AA67;
+}
+
+.cross_icon svg {
+    fill: #B21111;
+}
+
+.warning_icon svg {
+    fill: #c4cf25;
+}
+
+.c-refinement-table .slds-table th, .slds-table td {
+    position: inherit;
+}
+
+/*themes for data upload tables*/
+.tdlayout .slds-table {
+    width: 99.5% !important;
+    table-layout: fixed;
+}
+
+.dtbody .slds-table tbody tr {
+    height: 3rem;
+    background: #F0F0F0;
+}
+
+.dtbody-large .slds-table tbody tr {
+    height: 4.5rem;
+    background: #F0F0F0;
+}
+
+.dtheader .slds-table .slds-th__action {
+    background-color: #F0F0F0;
+    color: #454250;
+    font-size: 1rem;
+    outline: none !important;
+    box-shadow: none;
+}
+
+.dtaction .slds-table .slds-th__action:hover {
+    background-color: #F0F0F0;
+}
+
+.dtselection .slds-table th:focus, .slds-table th.slds-has-focus, .slds-table [role=gridcell]:focus, .slds-table [role=gridcell].slds-has-focus {
+    outline: none !important;
+    box-shadow: none;
+}
+
+.dt-Top-section {
+    height: 5rem;
+}
+
+.dt-mid-section {
+    height: 2.5rem;
+}
+
+.dt-bottom-section {
+    height: calc(100vh - 11.25rem);
+}
+
+
+.slds-resizable__divider:hover {
+    background-color: var(--theme-datatable-bgcolor);
+}
+
+.slds-resizable__divider::before {
+    background-color: var(--theme-datatable-bgcolor);
+}
+
+.slds-resizable__divider::after {
+    background-color: #FFFFFF;
+}
+
+.slds-has-focus .slds-is-resizable .slds-th__action {
+    background-color: #FFFFFF;
+    box-shadow: none;
+}
+
+.slds-has-focus .slds-is-resizable .slds-th__action:focus {
+    background-color: #FFFFFF;
+    box-shadow: none;
+}
+
+.slds-has-focus .slds-is-resizable .slds-th__action:hover {
+    background-color: #FFFFFF;
+    box-shadow: none;
+}
+
+.slds-has-focus .slds-is-resizable .slds-th__action:focus:hover {
+    background-color: #FFFFFF;
+    box-shadow: none;
+}
+
+.slds-has-focus .slds-th__action {
+    background-color: #FFFFFF;
+    box-shadow: none;
+}
+
+.slds-is-resizable .slds-th__action:focus {
+    background-color: #FFFFFF;
+    box-shadow: none;
+}
+
+.slds-is-resizable .slds-th__action:focus:hover {
+    background-color: #FFFFFF;
+    box-shadow: none;
+}
+
+.slds-is-sortable__icon {
+    filter: sepia(0%) saturate(77%) hue-rotate(179deg) brightness(65%) contrast(0%);
+}
+
+.slds-icon-action-delete {
+    background-color: #32A29B;
+    cursor: pointer;
+}
+
+/*themes for file selector button*/
+.slds-file-selector__text.slds-medium-show {
+    display: none;
+}
+
+.slds-file-selector__button.slds-button {
+    background-color: #FFFFFF;
+    border: 1px solid #32A29B;
+    color: #32A29B;
+    border-radius: 0px;
+    font-size: 12px;
+    text-align: center;
+    height: 1.75rem;
+    cursor: pointer;
+}
+
+.slds-file-selector__dropzone {
+    border: 0.1px solid #FFF;
+}
+
+/* Disable's Icon on Button on Right Side for Lightning-button */
+/* svg.slds-button__icon.slds-button__icon_left {
+    display: none;
+} */
+
+/*themes for toast messsages- success, error*/
+div.slds-theme--success.slds-notify--toast.slds-notify.forceToastMessage {
+    width: 100%;
+    min-height: 80px;
+    background: #00AA67;
+    margin-left: 66px;
+    margin-top: 2px;
+}
+
+lightning-icon.toastIcon.slds-m-right--small.slds-no-flex.slds-align-top.slds-icon-utility-success.slds-icon_container {
+    padding-block-start: 14px;
+}
+
+div.slds-theme--error.slds-notify--toast.slds-notify.forceToastMessage {
+    width: 100%;
+    min-height: 80px;
+    background: #B21111;
+    margin-left: 66px;
+    margin-top: 2px;
+}
+
+lightning-icon.toastIcon.slds-m-right--small.slds-no-flex.slds-align-top.slds-icon-utility-error.slds-icon_container {
+    padding-block-start: 14px;
+}
+
+div.slds-theme--warning.slds-notify--toast.slds-notify.forceToastMessage {
+    width: 100%;
+    min-height: 80px;
+    background: #E3A900;
+    margin-left: 66px;
+    margin-top: 2px;
+}
+
+lightning-icon.toastIcon.slds-m-right--small.slds-no-flex.slds-align-top.slds-icon-utility-warning.slds-icon_container {
+    padding-block-start: 14px;
+}
+
+button.slds-button.slds-button_icon.toastClose.slds-notify__close.slds-button--icon-inverse.slds-button_icon-bare {
+    margin-right: 70px;
+}
+
+.toastMessage {
+    white-space: break-spaces !important;
+}
+
+.c-cursor {
+    cursor: pointer;
+}
+
+.c-removePointerEvent {
+    pointer-events: none;
+}
+
+.c-spinnerColor {
+    --lwc-brandPrimary: #27A6A4;
+}
+
+.slds-backdrop_open {
+    opacity: 0.2;
+    background-color: #022D42;
+}

@@ -1,0 +1,13 @@
+<template>
+     <lightning-layout multiple-rows>
+        <lightning-layout-item size="8" style="margin-left: 10px;">
+            <lightning-input disabled={isReadOnly} variant="label-hidden" type="text" label="" value={customizeData} onchange={handleCustomize} placeholder="Enter Custom Code" ></lightning-input>
+        </lightning-layout-item>
+        <lightning-layout-item size="1" style="margin-left: 10px;">
+            <lightning-button-icon if:false={isReadOnly} icon-name="utility:close"  onclick={hideModalBox}    alternative-text="close"     class="slds-m-left_xx-small" title="close"></lightning-button-icon>
+        </lightning-layout-item>
+        <lightning-layout-item size="1" style="margin-left: 10px;">
+            <lightning-button-icon if:false={isReadOnly} icon-name="utility:save"      alternative-text="Save"  onclick={handleSave}   class="slds-m-left_xx-small" title="save"></lightning-button-icon>
+        </lightning-layout-item>
+    </lightning-layout>
+</template>

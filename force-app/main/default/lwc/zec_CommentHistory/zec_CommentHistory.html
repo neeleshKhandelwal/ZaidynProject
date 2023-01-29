@@ -1,0 +1,80 @@
+<template>
+    <template if:true={isComment}>
+        <table style="width: 100%" >
+            <thead>
+                <tr class="slds-table slds-table_cell-buffer slds-hint-parent" style="border-bottom: 1px solid #000; padding-bottom: 35px;">
+                    
+                    <th style="width: 70%; padding: 12px;">
+                        Comments
+                    </th>
+                    <th style="width: 30%;padding: 12px;">
+                        Logged by
+                    </th>
+                    
+                    
+                </tr>
+            </thead>
+            <tbody>
+                <!--template iterator:it={it.value.actionItemObj.Action_Item_Responses__r}>
+                    <tr class="slds-table slds-table_cell-buffer slds-table_bordered slds-hint-parent" key={it.value.Id} style="padding-right: 15px;">
+                    
+                        <td ><div class="slds-p-vertical_small">{it.value.Comments__c}</div> </td> 
+                        <td><lightning-formatted-date-time value={it.value.CreatedDate} year="numeric" day="2-digit" month="long"  hour="2-digit" minute="2-digit"></lightning-formatted-date-time> &nbsp; {it.value.CreatedBy.Name} </td>
+                        
+                    
+                </tr>
+                
+                </template-->
+                <template iterator:it={commentList}>
+                <tr class="slds-table slds-table_cell-buffer slds-table_bordered slds-hint-parent" key={it.value.Id} style="padding-right: 15px;"> 
+                    <td style="padding: 12px;">
+                        {it.value.Comment__c}
+                    </td>
+                    <td style="padding: 12px;"> 
+                        <lightning-formatted-date-time value={it.value.CreatedDate} year="numeric" day="2-digit" month="long"  hour="2-digit" minute="2-digit">
+                        </lightning-formatted-date-time> &nbsp; {it.value.CreatedBy.Name} 
+                    </td>
+                </tr>
+            </template>   
+                
+            </tbody>							
+        </table>
+    </template>
+
+    <template if:true={isaction}>
+        <table style="width: 100%" >
+            <thead>
+                <tr class="slds-table slds-table_cell-buffer slds-hint-parent" style="border-bottom: 1px solid #000; padding-bottom: 35px;">
+                    
+                    <th style="width: 70%; padding: 12px;">
+                        Comments
+                    </th>
+                    <th style="width: 30%;padding: 12px;">
+                        Logged by
+                    </th>
+                    
+                    
+                </tr>
+            </thead>
+            <tbody>
+            <template iterator:it={actionList}>
+                <tr class="slds-table slds-table_cell-buffer slds-table_bordered slds-hint-parent" key={it.value.Id} style="padding-right: 15px;"> 
+                    <td style="padding: 12px;">
+                        {it.value.Comment__c}
+                    </td>
+                    <td style="padding: 12px;"> 
+                        <lightning-formatted-date-time value={it.value.CreatedDate} year="numeric" day="2-digit" month="long"  hour="2-digit" minute="2-digit">
+                        </lightning-formatted-date-time> &nbsp; {it.value.CreatedBy.Name} 
+                    </td>
+                </tr>
+            </template>   
+                
+            </tbody>							
+        </table>
+    </template>
+
+
+    <template if:true={noCommentAvailable}>
+        No comment available
+    </template>
+</template>

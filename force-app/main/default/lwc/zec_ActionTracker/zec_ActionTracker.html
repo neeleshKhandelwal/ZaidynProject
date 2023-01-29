@@ -1,0 +1,458 @@
+<template>
+	<div class="slds-card">	
+        <div class="slds-p-around_medium slds-page-header slds-page-header_record-home" style="background-color:#FAFAFA">	
+			<b style="font-size: 24px;">Action Item Tracker</b>
+		</div>
+	</div>
+	<div class="c-container slds-theme_shade" style="font-size: 12px; background-color:white">
+		<lightning-layout multiple-rows="true">
+			<lightning-layout-item padding="around-small" size="11">
+	<div class="slds-grid slds-gutters">
+		<div  class="slds-col">
+			<lightning-input value={queryTerm}  onchange={handleKeyUp} type="search" label="Search" placeholder="Search Item No. or Criticality "> </lightning-input>
+		</div>
+		<div class="slds-col">
+			<lightning-combobox
+				name="category"
+				label="Category"
+				value={selectedCategory}            
+				options={categoryOptions}
+				onchange={handleChangeCategory} ></lightning-combobox>
+		</div>
+		<div class="slds-col">
+			<lightning-combobox
+				name="assigned to"
+				label="Assigned To"
+				value={assignedToValue}            
+				options={options}
+				onchange={handleChange} ></lightning-combobox>
+		</div>
+		<div class="slds-col">
+	   
+		</div>
+		<div class="slds-col">
+	   
+		</div>
+	</div>
+	
+	
+	<template if:true={isShowModal}>
+	
+		<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+		   <div class="slds-modal__container">
+			<!-- modal header start -->
+			  <header class="slds-modal__header">
+				 <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={hideModalBox}>
+					<lightning-icon icon-name="utility:close"
+					   alternative-text="close"
+					   variant="inverse"
+					   size="small" ></lightning-icon>
+					<span class="slds-assistive-text">Close</span>
+				 </button>
+				 <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Add New Action</h2>
+			  </header>
+		  
+			  <!-- modal body start -->
+			  <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+				<lightning-record-edit-form 
+						object-api-name="Action_Item__c" onsubmit ={handleSubmit}>
+					<lightning-messages> </lightning-messages>
+					<div class="slds-grid">
+						<div class="slds-col slds-size_1-of-2">
+							<lightning-input-field field-name="Name"> </lightning-input-field>
+							<lightning-input-field field-name="ETA__c"> </lightning-input-field>
+							<lightning-input-field field-name="Contact__c"> </lightning-input-field>
+							
+						</div>
+						<div class="slds-col slds-size_1-of-2">
+						   <lightning-input-field field-name="Criticality__c"> </lightning-input-field>
+						   <lightning-input-field field-name="Action__c"> </lightning-input-field>
+						   
+						</div>
+					</div>
+					<lightning-input-field field-name="Response__c"> </lightning-input-field>
+					<div class="slds-float_right">
+					<lightning-button
+						class="slds-m-top_small "
+						type="submit"
+						label="Create"
+					>
+					</lightning-button>
+					
+					<lightning-button label="Cancel" onclick={hideModalBox} class="slds-m-left_x-small"></lightning-button>
+					</div>
+				</lightning-record-edit-form>
+			  </div>
+
+			  <!-- modal footer start>
+			  <footer class="slds-modal__footer">
+				 <button class="slds-button slds-button_neutral" onclick={hideModalBox}>Cancel</button>
+			  </footer-->
+		   
+		   </div>
+		</section>
+		<div class="slds-backdrop slds-backdrop_open"></div>
+	
+	</template>
+	
+	
+	<template if:true={isNewContact}>
+	
+		<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+		   <div class="slds-modal__container">
+			<!-- modal header start -->
+			  <header class="slds-modal__header">
+				 <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={hideModalBox}>
+					<lightning-icon icon-name="utility:close"
+					   alternative-text="close"
+					   variant="inverse"
+					   size="small" ></lightning-icon>
+					<span class="slds-assistive-text">Close</span>
+				 </button>
+				 
+				<h3 slot="title">
+					<lightning-icon icon-name="utility:connected_apps" size="small"></lightning-icon>
+					Create New Assignee
+				</h3>
+			  </header>
+		  
+			  <!-- modal body start -->
+			  <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
+				<lightning-input type="text" label="First Name" class="inputFirstName"></lightning-input>
+				<lightning-input type="text" required label="Last Name" class="inputLastName"></lightning-input>
+				
+					<div class="slds-float_right">
+					<lightning-button
+						class="slds-m-top_small "
+						onclick={createContact}
+						label="Create"
+					>
+					</lightning-button>
+					
+					<lightning-button label="Cancel" onclick={hideModalBox} class="slds-m-left_x-small"></lightning-button>
+					</div>
+				<!-- <lightning-record-edit-form 
+						object-api-name="Contact" onsubmit ={handleSubmit}>
+					<lightning-messages> </lightning-messages>
+					<div class="slds-grid">
+						<div class="slds-col slds-size_1-of-2">
+							<lightning-input-field field-name="Name"> </lightning-input-field>						
+						</div>
+						<div class="slds-col slds-size_1-of-2">
+							<lightning-input-field field-name="AccountId"> </lightning-input-field>
+						   <lightning-input-field field-name="Email"> </lightning-input-field>
+						   
+						</div>
+					</div>
+					
+					<div class="slds-float_right">
+					<lightning-button
+						class="slds-m-top_small "
+						type="submit"
+						label="Create"
+					>
+					</lightning-button>
+					
+					<lightning-button label="Cancel" onclick={hideModalBox} class="slds-m-left_x-small"></lightning-button>
+					</div>
+				</lightning-record-edit-form> -->
+			  </div>
+
+			  <!-- modal footer start>
+			  <footer class="slds-modal__footer">
+				 <button class="slds-button slds-button_neutral" onclick={hideModalBox}>Cancel</button>
+			  </footer-->
+		   
+		   </div>
+		</section>
+		<div class="slds-backdrop slds-backdrop_open"></div>
+	
+	</template>
+	
+	
+	<template if:true={isNewComment}>
+	
+		<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+		   <div class="slds-modal__container">
+			<!-- modal header start -->
+			  <header class="slds-modal__header">
+				 <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={hideModalBox}>
+					<lightning-icon icon-name="utility:close"
+					   alternative-text="close"
+					   variant="inverse"
+					   size="small" ></lightning-icon>
+					<span class="slds-assistive-text">Close</span>
+				 </button>
+				 
+				<h3 slot="title">
+					<lightning-icon icon-name="utility:connected_apps" size="small"></lightning-icon>
+					Add New Comment
+				</h3>
+			  </header>
+		  
+			  <!-- modal body start -->
+			  <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-3">
+				<lightning-input type="text" label="Comment" class="inputComment"></lightning-input>
+				
+				
+					<div class="slds-float_right slds-m-top_small">
+					<lightning-button
+						class="slds-m-top_small "
+						onclick={addNewComment}
+						label="Save"
+					>
+					</lightning-button>
+					
+					<lightning-button label="Cancel" onclick={hideModalBox} class="slds-m-left_x-small"></lightning-button>
+					</div>
+				
+			  </div>
+		   </div>
+		</section>
+		<div class="slds-backdrop slds-backdrop_open"></div>
+	
+	</template>
+	
+	
+	
+	
+	
+    <div class="slds-grid slds-grid_vertical-align-center slds-grid_align-spread" style="padding-top: 0.5em;">
+            <!--RECORDS PER PAGE-->
+            <div class="slds-col">
+                <div class="slds-list_inline slds-p-bottom_xx-small">
+                    <label class="slds-text-color_weak slds-p-horizontal_x-small" for="recordsPerPage" style="padding-top: 9px;">Page Size:</label>
+                    <div class="slds-select_container">
+                        <select class="slds-select" id="recordsPerPage" onchange={handleRecordsPerPage}>
+                            <template for:each={pageSizeOptions} for:item="option">
+                                <option key={option} value={option}>{option}</option>
+                            </template>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <!--PAGE NAVIGATION-->
+            <div class="slds-align_absolute-center" style="height:5rem">
+                
+               
+                
+				
+				<span class="slds-badge">Showing {startrange}-{endrange} &nbsp;of&nbsp; {totalRecords} &nbsp;&nbsp;Record(s)</span>
+                &nbsp;
+				<lightning-button disabled={bDisableFirst} icon-name="utility:chevronleft" label="" alternative-text="Previous" onclick={handlePrevious}></lightning-button>&nbsp;
+                <lightning-button disabled={bDisableLast} icon-name="utility:chevronright" label="" alternative-text="Next" onclick={handleNext} class="slds-p-horizontal_x-small" icon-position="right"></lightning-button>
+                
+            </div>
+            <!--TOTAL RECORDS-->
+            <div class="slds-clearfix">
+                <div class="slds-float_right">
+                    <!--span class="slds-badge"> Total Records: {totalRecords}</span-->
+					<lightning-button variant="brand" label="+ Add New Action" title="Add New Action" onclick={showModalBox} class="slds-m-left_x-small slds-m-top_medium slds-m-left_large"></lightning-button>
+                </div>
+            </div>
+        </div>
+		
+		
+		<br/><br/>
+	
+        <table id="sortable">
+            <thead>
+				<tr style="border-bottom: 1px solid #000; padding: 35px;">
+					<th></th>
+					<th><a data-id="ItemNo" onclick={sort}>Item No. &nbsp;
+						<lightning-button-icon class="aiconb" icon-name="utility:sort" variant="bare" alternative-text="sort" title="Sort">
+						</lightning-button-icon></a></th>
+					<th></th>
+					<th><a data-id="Category" onclick={sort}>Category &nbsp;
+						<lightning-button-icon class="aiconb" icon-name="utility:sort" variant="bare" alternative-text="sort" title="Sort">
+						</lightning-button-icon></a></th>
+					<th><a data-id="Description" onclick={sort}> Description &nbsp;
+						<lightning-button-icon class="aiconb" icon-name="utility:sort" variant="bare" alternative-text="sort" title="Sort">
+						</lightning-button-icon></a></th>
+					<th><a data-id="ETA" onclick={sort}>ETA &nbsp;
+						<lightning-button-icon class="aiconb" icon-name="utility:sort" variant="bare" alternative-text="sort" title="Sort">
+						</lightning-button-icon></a></th>
+					<th><a data-id="Criticality" onclick={sort}>Criticality &nbsp;
+						<lightning-button-icon class="aiconb" icon-name="utility:sort" variant="bare" alternative-text="sort" title="Sort">
+						</lightning-button-icon></a></th>
+					<th><a data-id="AsignedTo" onclick={sort}> Assigned To &nbsp;
+						<lightning-button-icon class="aiconb" icon-name="utility:sort" variant="bare" alternative-text="sort" title="Sort">
+						</lightning-button-icon></a></th>
+					<th> </th>
+				</tr>
+            </thead>
+            <tbody>
+                <template iterator:it={recordsToDisplay}>
+				 
+                    <tr class="slds-table slds-table_cell-buffer slds-table_bordered slds-hint-parent" key={it.value.actionItemObj.Id} style="cursor: pointer;" >                        
+                        
+						<td>
+						<lightning-button-icon icon-name={it.value.iconClicked} onclick={hideAndShow} data-record-id={it.index} variant="bare"  class="aiconb">
+						
+							<a href="javascript:void(0);" onclick={hideAndShow} data-record-id={it.index} style="display:block;text-decoration:none;color:black;">
+							 </a>
+						
+						</lightning-button-icon>
+						</td>
+                           
+                        
+                        <td data-label="Item No." style="padding-left: 12px;">       
+                            <a href="javascript:void(0);" onclick={hideAndShow} data-record-id={it.index} style="display:block;text-decoration:none;color:black;">                 
+                                {it.value.actionItemObj.Name}
+                            </a>
+                        </td>
+                        <td>
+							<template if:true={it.value.hasAttachment}>
+                            <lightning-icon icon-name="utility:attach" size="x-small"></lightning-icon>
+							</template>
+                        </td>
+                        <td data-label="Category" style="padding-left: 12px;">
+                            <a href="javascript:void(0);" onclick={hideAndShow} data-record-id={it.index} style="display:block;text-decoration:none;color:black;">                 
+                                {it.value.actionItemObj.Action__r.Question_Choice__r.Question__r.BRD_Rule__r.Name}
+                            </a>
+                        </td>
+                        <td data-label="Description" style="padding-left: 12px;">
+                            <a href="javascript:void(0);" onclick={hideAndShow} data-record-id={it.index} style="display:block;text-decoration:none;color:black;">                 
+                                {it.value.actionItemObj.Details_to_capture__c}
+                            </a>
+                        </td>
+                        <td data-label="ETA" style="padding-left: 12px;">
+                            <a href="javascript:void(0);" onclick={hideAndShow} data-record-id={it.index} style="display:block;text-decoration:none;color:black;">                 
+                                {it.value.actionItemObj.ETA__c}
+                            </a>
+                        </td>
+                        <td data-label="Criticality" style="padding-left: 12px;">
+							<template if:true={it.value.actionItemObj.Criticality__c}>
+                            <a href="javascript:void(0);" onclick={hideAndShow} data-record-id={it.index} style="display:block;text-decoration:none;color:black;">   
+								<lightning-badge label={it.value.actionItemObj.Criticality__c} class={it.value.actionItemObj.Criticality__c}></lightning-badge>              
+                            </a>
+						</template>
+						<template if:false={it.value.actionItemObj.Criticality__c}>
+                            <a href="javascript:void(0);" onclick={hideAndShow} data-record-id={it.index} style="display:block;text-decoration:none;color:black;">   
+								<p class="emptyValue">--</p>          
+                            </a>
+						</template>
+                        </td>    
+                        <td aria-selected="true" class="slds-cell-edit" role="gridcell" data-label="Assigned To" style="padding-left: 12px;">
+                            <a href="javascript:void(0);" data-record-id={it.index} style="display:block;text-decoration:none;color:black;"> <span class="slds-grid slds-grid_align-spread">
+								<span class="slds-truncate" title={it.value.actionItemObj.Contact__r.Name}>{it.value.actionItemObj.Contact__r.Name}</span>
+								<lightning-button-icon icon-name="utility:edit" data-record-id={it.index} icon-class="slds-button__icon_edit" variant="bare" class="slds-cell-edit__button slds-m-left_x-small" onclick={isToggleChecked}></lightning-button-icon>
+							</span>                
+                                <!--{it.value.actionItemObj.Contact__r.Name}-->
+                            </a>
+                        </td> 
+						<td>
+							<!--lightning-input type="toggle" label="Add another assignee" data-record-id={it.index} onchange={isToggleChecked}></lightning-input-->
+							<template if:true={it.value.toogleBool}>
+								<div class="slds-grid slds-gutters">
+									<div  class="slds-col">
+								<!--lightning-input type="text" label="Enter assignee" variant="label-hidden" aria-labelledby="Enter assignee" data-record-id={it.index} onchange={handleAssigneeChange}></lightning-input-->
+								<c-zec_-custom-lookup obj-name="Contact" search-placeholder="Search assignee" icon-name="standard:contact" onlookupselected={handleAssigneeChange}> </c-zec_-custom-lookup>
+									</div>
+									<div  class="slds-col">
+									<lightning-button-icon icon-name="utility:add" alternative-text="Create New Assignee" onclick={createNewContact} data-record-id={it.index} class="slds-m-left_x-small"></lightning-button-icon>
+									<lightning-button-icon icon-name="utility:save" alternative-text="Save Changes" onclick={updateActionItem} data-record-id={it.index} class="slds-m-left_x-small" ></lightning-button-icon>
+									
+									</div>
+								</div>
+							</template>
+						</td>
+                    </tr>
+					
+                    <template if:false={it.value.hideBool} >
+                        <tr key={it.value.actionItemObj.Id} style="padding-right: 15px;">
+                            <td colspan="9">
+                                <template if:true={it.value.contactBool}>
+								<div class="slds-box slds-p-around_x-small" style="background-color:#F4F3F3">
+									<div class="slds-p-around_medium slds-modal__content">
+										<div class="slds-grid slds-gutters slds-border_bottom" >
+											  <div class="slds-col">
+												<b>Time Period</b><br/>
+												<td style="padding-top: 12px;"><lightning-formatted-date-time value={it.value.actionItemObj.CreatedDate} year="numeric" day="2-digit" month="long"  hour="2-digit" minute="2-digit"></lightning-formatted-date-time>
+												
+											  </div>
+											  <div class="slds-col" style="padding-bottom: 20px;">
+												<b>Risk</b><br/>
+												<div>
+												{it.value.actionItemObj.Details_to_capture__c}
+												</div>
+											  </div>
+											  <div class="slds-col" style="padding-bottom: 20px;">
+												<b>Start Time</b><br/>
+												<div>
+												{it.value.actionItemObj.ETA__c}
+												</div>
+											  </div>
+											  <div class="slds-col" style="padding-bottom: 20px;">
+												<b>Created by</b><br/>
+												<div>
+												{it.value.actionItemObj.Contact__r.Name}
+												</div>
+											  </div>
+											  <div class="slds-col">
+												<b>Alert</b><br/>
+												 <div class="slds-form-element">
+												  <label class="slds-checkbox_toggle slds-grid">
+													<span class="slds-form-element__label slds-m-bottom_none"></span>
+													<input type="checkbox" name="checkbox-toggle-16" value="checkbox-toggle-16" aria-describedby="checkbox-toggle-16" />
+													  <span class="slds-checkbox_faux"></span>
+													  <!--span class="slds-checkbox_on">Enabled</span>
+													  <span class="slds-checkbox_off">Disabled</span-->
+												  </label>
+												</div>
+											  </div>
+										</div>								
+										<br/>
+										<table style="width: 100%" >
+											<thead>
+												<tr style="border-bottom: 1px solid #000; padding-bottom: 35px;">
+													
+													<th style="width: 70%">
+														Comments
+													</th>
+													<th style="width: 30%">
+														Logged by
+													</th>
+													
+													
+												</tr>
+											</thead>
+											<tbody>
+												<template iterator:it={it.value.actionItemObj.Action_Item_Responses__r}>
+												  <tr class="slds-table slds-table_cell-buffer slds-table_bordered slds-hint-parent" key={it.value.Id} style="padding-right: 15px;">
+													
+														<td ><div class="slds-p-vertical_small">{it.value.Comments__c}</div> </td> 
+														<td><lightning-formatted-date-time value={it.value.CreatedDate} year="numeric" day="2-digit" month="long"  hour="2-digit" minute="2-digit"></lightning-formatted-date-time> &nbsp; {it.value.CreatedBy.Name} </td>
+														
+													
+												</tr>
+												
+												</template>
+												<tr >
+												 <td style="padding-top: 12px;"><lightning-button label="+ Add Comments" title="Add Comments" data-record-id={it.index} onclick={addCommentsButton} class="slds-p-vertical_medium" ></lightning-button> 
+												 </td>
+												</tr>
+												
+											</tbody>
+											
+											
+											</table>  
+											   
+												  
+												
+									</div>
+								</div>
+                                </template>
+                                
+                            </td>
+                        </tr>
+                    </template> 
+                                
+                </template>
+            </tbody>
+        </table>   
+			</lightning-layout-item>
+		</lightning-layout>
+    </div>
+
+</template>

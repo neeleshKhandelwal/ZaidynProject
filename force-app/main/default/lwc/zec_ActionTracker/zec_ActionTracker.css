@@ -1,0 +1,32 @@
+.slds-modal__content{
+    overflow: initial;
+}
+.heading {  /* new style */
+    border-bottom: 1px solid black;
+}
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+ /*  .aiconb {
+   --sds-c-button-color-background : #666666!important; 
+}*/
+.HIGH {
+    --sds-c-badge-color-background: #FFEDE9;
+    --sds-c-badge-text-color: #B21111;
+    /* --sds-c-badge-font-size: 0.75rem; */
+}
+.MEDIUM {
+    --sds-c-badge-color-background: #FFF9F1;
+    --sds-c-badge-text-color: #E3A900;
+    /* --sds-c-badge-font-size: 0.75rem; */
+}
+.LOW {
+    --sds-c-badge-color-background: #F1FEFF;
+    --sds-c-badge-text-color: #00AA67;
+   /* --sds-c-badge-font-size: 0.75rem; */
+}
+.emptyValue {
+    margin-left: 1.5rem;
+}

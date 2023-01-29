@@ -1,0 +1,35 @@
+.c_reviewRequirement {
+  background: #fff;
+}
+
+.category-filter label, label.slds-form-element__label
+ {
+    font-weight: bold;
+    padding: 20px 0;
+}
+
+
+
+.category-search {
+  align-items: flex-end;
+}
+.category-text {
+  color: #75C0C3;
+  font-weight: bold;
+}
+.heading {  /* new style */
+    border-bottom: solid 2px grey;
+}
+
+.heading th {
+    background: none;
+    padding: 12px 0;
+}
+
+.child-container  {
+  background-color: #F4F3F3;
+}
+
+thead.child-table th{
+  background: none;
+}

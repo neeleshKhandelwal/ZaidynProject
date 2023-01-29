@@ -1,0 +1,127 @@
+<template>
+    <template if:true={showSpinner}>
+		<lightning-spinner style="position:fixed" alternative-text="Loading" size="large"></lightning-spinner>
+	</template>
+    <div class="c-container slds-theme_shade" style="font-size: 12px; background: #FAFAFA;">
+        <lightning-layout multiple-rows="true" style="width:100%">
+            <lightning-layout-item size="12">
+                <div class="page-heading">Requirements Gathering</div> 
+			</lightning-layout-item>
+            
+            <template if:true={projectid}>
+                <lightning-layout-item size="9">
+                    <div class="slds-card question-container" style={qustionContainerStyle}>
+                        <div class="">
+                            <div if:false={moduleProgress} style="font-size: 16px;font-weight: bold;padding: 5px 2px;margin-bottom: 15px">{pageName}</div>
+                            <template if:true={moduleProgress}>
+                                <c-zec_-module-progress 
+                                onchangepage={handleChangePage}
+                                current-screen={currentScreen} 
+                                recently-answered-questions={recentlyAnsweredQuestions}
+                                action-items = {actionItems}
+                                progress={progressWrapper}
+                                onsignoff={openSignOffPage}
+                                onresumepage= {handleResumePage}></c-zec_-module-progress>
+                            </template>
+                            <template if:false={moduleProgress}>
+                                <template if:true={currentScreen}>
+                                    <c-zec_-questions 
+                                    if:false={moduleProgress} 
+                                    is-read-only={isReadOnly}
+                                    onsignoff={openSignOffPage}  
+                                    current-screen={currentScreen} 
+                                    project-id={projectid} 
+                                    ontreeitem={handleSelectItem}  
+                                    onanswers={handleAnswers}  
+                                    oncategory={handleCategory}></c-zec_-questions>
+                                </template>
+                            </template>
+                        </div>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item  size="3">
+                    <div class="slds-card step-container" style={stepsContainerStyle}>
+                        <template iterator:level={moduleTree}>
+                            <div class={level.value.activeStep} key={level.value.stepName}>
+                                <div class="step-box" onclick={handleScreenSelection} data-screenid={level.value.screenProgress.Id}>
+                                    <p>
+                                        <span class="step-badge">{level.value.stepName}</span>
+                                        <lightning-icon if:true={level.value.stepCompleted} icon-name="utility:lock" alternative-text="lock!" title="lock" size="x-small" style="margin-left:5px"></lightning-icon>
+                                    </p>
+                                    <div>
+                                        <div class="step-name">{level.value.screenName}</div>
+                                        <div style="float:right">
+                                            <lightning-icon icon-name="utility:success" alternative-text="Success!" variant={level.value.stepCompleted} title="success variant small" size="small"></lightning-icon>
+                                        </div>
+                                    </div>
+                                </div>
+                                <template if:true={level.value.showModuleProgress}>
+                                    <lightning-tree items={categorylist} onselect={handleSelect} selected-item={selectedItems}>
+                                    </lightning-tree>
+                                </template>
+                            </div>
+                        </template>
+                    </div>
+                </lightning-layout-item>
+            </template>
+            
+        </lightning-layout>
+    </div>
+    <template if:true={showSignOff}>
+        <!-- Modal/Popup Box LWC starts here -->
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <!-- Modal/Popup Box LWC header here -->
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeModal}>
+                        <lightning-icon icon-name="utility:close"
+                            alternative-text="close"
+                            variant="inverse"
+                            size="small" ></lightning-icon>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Sign off {pageName}</h2>
+                </header>
+                <!-- Modal/Popup Box LWC body starts here -->
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                   You are about to Sign off the {pageName},you won't be able to make any more edits on this module.Are you sure you want to proceed?
+                </div>
+                <!-- Modal/Popup Box LWC footer starts here -->
+                <footer class="slds-modal__footer">
+                    <button class="slds-button slds-button_neutral" onclick={closeModal} title="Cancel">Cancel</button>
+                    <button class="slds-button slds-button_brand" onclick={handleSignOff} title="Sign-Off">Sign-Off</button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+    <template if:true={changeScreen}>
+        <!-- Modal/Popup Box LWC starts here -->
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-2" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <!-- Modal/Popup Box LWC header here -->
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeModal}>
+                        <lightning-icon icon-name="utility:close"
+                            alternative-text="close"
+                            variant="inverse"
+                            size="small" ></lightning-icon>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 id="modal-heading-02" class="slds-text-heading_medium slds-hyphenate">Warning!</h2>
+                </header>
+                <!-- Modal/Popup Box LWC body starts here -->
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
+                   If you have not saved the form,please save it and then Click on "Proceed"
+                </div>
+                <!-- Modal/Popup Box LWC footer starts here -->
+                <footer class="slds-modal__footer">
+                    <button class="slds-button slds-button_neutral" onclick={handleCloseChangeScreen} title="Cancel">Cancel</button>
+                    <button class="slds-button slds-button_brand" onclick={handleProceed} title="Sign-Off">Proceed</button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+    
+</template>

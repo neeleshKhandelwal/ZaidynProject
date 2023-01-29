@@ -1,0 +1,62 @@
+<template>
+    <template if:false={loaded}>
+        <lightning-spinner alternative-text="Loading"></lightning-spinner>
+    </template>
+    <template if:true={initialLoaded}>
+    <!--<lightning-progress-indicator  current-step={currentScreen.Name} type="path" variant="base">
+        <template for:each={screens} for:item="screen">
+            <lightning-progress-step label={screen.Name} value={screen.Name} key={screen.Name}></lightning-progress-step>
+        </template>
+    </lightning-progress-indicator>-->
+    <lightning-layout multiple-rows="true" style="background: #fff;">
+        <lightning-layout-item size="12" class="slds-m-bottom_x-small">
+            <div class="heading-container">
+                <span class="page-heading">{currentScreen.Name}</span>
+                <span>
+                    <lightning-button variant="brand" label={startBtnLabel} title="Primary action" onclick={handleStarted} class="slds-m-left_x-small slds-float_right"></lightning-button>
+                </span>
+            </div> 
+        </lightning-layout-item>
+        <lightning-layout-item size="12">
+            <div class="slds-box slds-m-bottom_x-small">
+                <div style="margin-bottom:30px;">
+                    <span>Status: {currentScreen.Status__c}</span>
+                    <template if:true={currentScreen.Get_Sign_Off__c}>
+                        <span>
+                            <lightning-input data-id="toggle1" type="toggle" label="Sign Off" checked={signedOff} class="slds-float_right" onchange={changeToggle} message-toggle-active="" message-toggle-inactive="" ></lightning-input>
+                        </span>
+                    </template>
+                </div>
+                <div>
+                    <div if:true={progress}>
+                        <lightning-progress-bar value={progress.CompletionRate} size="large"></lightning-progress-bar>
+                        <div class="slds-p-top_x-small"><b>{progress.NumberOfResponses} of {progress.NumberOfQuestions} questions answered</b></div>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-box slds-m-bottom_x-small">
+                <div style="font-weight: 700;font-size: 14px;">Alerts</div>
+                <template if:true={actionItems}>
+                    <template for:each={actionItems} for:item="item">
+                        <div key={item.Name} style="padding: 10px 0;">
+                            <lightning-icon icon-name="utility:warning" alternative-text="Warning!" variant="warning" title="Action Item" size="x-small"></lightning-icon>
+                            <span style="margin: 0 0 0 5px;padding-top: 1px;">{item.Name}</span>
+                        </div>
+                    </template>
+                </template>
+            </div>
+            <div class="slds-box slds-m-bottom_x-small">
+                <div style="font-weight: 700;font-size: 14px;">Recently Answered Questions</div>
+                <template if:true={recentlyAnsweredQuestions}>
+                    <template for:each={recentlyAnsweredQuestions} for:item="data">
+                        <div key={data.questionId}>
+                            <p style="padding: 10px 0 0;"><span style="font-weight: 700;">Q.&nbsp;</span>{data.question}</p> 
+                            <p style="padding: 10px 0 0;"><span style="font-weight: 700;">Your answer:&nbsp;</span>{data.answer}</p>   
+                        </div>
+                    </template>
+                </template>
+            </div>
+        </lightning-layout-item>
+    </lightning-layout>
+    </template>
+</template>

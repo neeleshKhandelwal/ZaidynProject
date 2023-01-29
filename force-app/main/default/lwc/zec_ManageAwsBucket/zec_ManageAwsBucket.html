@@ -1,0 +1,26 @@
+<template>
+    <lightning-layout multiple-rows>
+        <lightning-layout-item size="6" style="margin-top: 5px;">
+            <lightning-input type="text" label="Access Key" value={newAccessKey} onchange={handleAccessKeyChange} class="inputComment"></lightning-input>
+            <lightning-input type="text" label="Bucket Name" value={newBucketName} onchange={handleBucketNameChange} class="inputComment"></lightning-input>
+            </lightning-layout-item>
+            <lightning-layout-item size="6" style="padding-left: 5px;margin-top: 5px;">
+                <lightning-input type="text" label="Secret Key" value={newSecretKey} onchange={handleSecretKeyChange} class="inputComment"></lightning-input>
+                <lightning-input type="text" label="Region" value={newRegion} onchange={handleRegionChange} class="inputComment"></lightning-input>
+                
+                <div class="slds-float_right" style="margin-top: 5px;">
+                    <lightning-button
+                        class="slds-m-top_small "
+                        onclick={handleSave}
+                        label="Save"
+                    >
+                    </lightning-button>
+                    
+                    <lightning-button label="Cancel" onclick={hideCancel} class="slds-m-left_x-small"></lightning-button>
+                </div>
+                
+            </lightning-layout-item>
+            
+    </lightning-layout>
+    
+</template>

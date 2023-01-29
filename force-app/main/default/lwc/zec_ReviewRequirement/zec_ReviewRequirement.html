@@ -1,0 +1,128 @@
+<template>
+	<div class="c_reviewRequirement slds-p-around_large">
+		<div class="slds-grid slds-gutters category-search">
+			<div class=" category-filter slds-col slds-size_3-of-12">
+				<lightning-combobox
+					name="category"
+					placeholder="Select Category"
+					class="category-filter"
+					label="View Category"
+					value={selectedCategory}
+					options={categoryOptions}
+					onchange={handleChangeCategory}>
+				</lightning-combobox>
+			</div>
+			<div class="slds-col slds-size_3-of-12">
+				<lightning-input value={queryTerm} onchange={handleKeyUp} type="search"
+					label="" placeholder="Search"> </lightning-input>
+			</div>
+		</div>
+		<div class="slds-grid slds-p-vertical_medium">
+			<!--PAGE NAVIGATION-->
+			<div style="height:5rem">
+				<span class="slds-badge">Showing {startRange}-{endRange} &nbsp;of&nbsp; {totalRecords} &nbsp;&nbsp;Record(s)</span>
+				&nbsp;
+				<lightning-button disabled={bDisableFirst} icon-name="utility:chevronleft" label="" alternative-text="Previous" onclick={handlePrevious}></lightning-button>&nbsp;
+				<lightning-button disabled={bDisableLast} icon-name="utility:chevronright" label="" alternative-text="Next" onclick={handleNext} class="slds-p-horizontal_x-small" icon-position="right"></lightning-button>
+			</div>
+		</div>
+
+		<table id="sortable" class="slds-table slds-no-row-hover">
+			<thead>
+				<tr class="slds-line-height_reset heading">
+					<th style="width: 1rem"></th>
+					<th>
+						Category &nbsp;
+						<lightning-button-icon icon-name="utility:sort" onclick={handleCategorySort} variant="container" alternative-text="sort" title="Sort"></lightning-button-icon>
+					</th>
+					<th>Description</th>
+				</tr>
+			</thead>
+			<tbody>
+				<template for:each={recordsToDisplay} for:item="item" for:index="index">
+
+					<tr class="slds-hint-parent" key={item.record.categoryId} style="cursor: pointer; width: 5%;">
+
+						<td>
+							<lightning-button-icon icon-name={item.iconClicked}
+								onclick={hideAndShow} data-record-id={index} variant="container">
+								<a href="javascript:void(0);" onclick={hideAndShow}
+									data-record-id={index}
+									style="display:block;text-decoration:none;">
+								</a>
+							</lightning-button-icon>
+						</td>
+						<td data-label="Category">
+							<a href="javascript:void(0);" onclick={hideAndShow} class="category-text"
+								data-record-id={index}
+								style="display:block;text-decoration:none;">
+								{item.record.categoryName}
+							</a>
+						</td>
+						<td data-label="Description">
+							<span></span>
+						</td>
+
+					</tr>
+
+					<template if:false={item.hideBool}>
+						<tr key={item.record.categoryId} style="padding-right: 15px;">
+							<td colspan="9">
+									<div class="child-container slds-box">
+										<div class="slds-p-around_xxx-small">
+											<table style="width: 100%" class="slds-table slds-no-row-hover">
+												<thead class='child-table'>
+													<tr class="slds-line-height_reset heading">
+														<th class="slds-p-vertical_medium slds-p-hortizontal-small">
+															BRD Subcategory &nbsp;
+															<lightning-button-icon icon-name="utility:sort" variant="container" alternative-text="sort" title="Sort">
+															</lightning-button-icon>
+														</th>
+														<th class="slds-p-vertical_medium slds-p-hortizontal-small">
+															BRD Rule
+														</th>
+														<th class="slds-p-vertical_medium slds-p-hortizontal-small">
+															Last Updated &nbsp;
+															<lightning-button-icon icon-name="utility:sort" variant="container" alternative-text="sort" title="Sort">
+															</lightning-button-icon>
+														</th>
+														<th class="slds-p-vertical_medium slds-p-hortizontal-small">
+															Updated By &nbsp;
+															<lightning-button-icon icon-name="utility:sort" variant="container" alternative-text="sort" title="Sort">
+															</lightning-button-icon>
+														</th>
+														<th data-label="go-to-qestion"></th>
+													</tr>
+												</thead>
+												<tbody>
+													<template
+														iterator:it={item.record.subRecords}>
+														<tr key={item.record.categoryId}>
+															<td>{it.value.subCategory} </td>
+															<td>{it.value.brdRule} </td>
+															<td>
+																<lightning-formatted-date-time value={it.value.lastModifiedByDate} ></lightning-formatted-date-time>
+															</td>
+															<td>{it.value.lastModifiedByName} </td>
+															<td>
+																<!-- <lightning-button onclick={navigateToQuestionViewPage}></lightning-button> -->
+																<a href="javascript:void(0);" data-record-id={it.value.questionId} onclick={navigateToQuestionViewPage}>
+																	<lightning-button-icon icon-name="utility:new_window" title="Go to question" target="_blank"
+																		onclick={hideAndShow} data-record-id={it.value.questionId} variant="container">
+																	</lightning-button-icon>
+																</a>
+															</td>
+														</tr>
+													</template>
+												</tbody>
+											</table>
+										</div>
+									</div>
+							</td>
+						</tr>
+					</template>
+				</template>
+			</tbody>
+		</table>
+	</div>
+</template>

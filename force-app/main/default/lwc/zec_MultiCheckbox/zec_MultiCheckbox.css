@@ -1,0 +1,29 @@
+.counter-badge{
+    width: 21px;
+    height: 21px;
+    padding: 2px 7px;
+    font-size: 14px;
+    background-color: #454250;
+    border-radius: 20px;    
+    color:#FFFFFF;
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 600;
+}
+
+.question-label{
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    color: #454250;
+}
+
+.file-wrapper{
+    margin: 15px 0 5px 0;
+}
+.file-table-wrapper{
+    margin-top:15px; 
+    border-radius: var(--lwc-borderRadiusMedium,0.25rem);
+    border: var(--lwc-borderWidthThin,1px) solid var(--lwc-colorBorder,rgb(229, 229, 229));
+}

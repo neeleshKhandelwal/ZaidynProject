@@ -1,0 +1,309 @@
+<template>
+	<template if:true={isQuestionBankTable}>
+		<lightning-layout multiple-rows="true">
+			<lightning-layout-item padding="around-small" size="3">
+				<div class="slds-col">
+					<lightning-combobox
+						name="module"
+						label="Module"
+						value={selectedModule}            
+						options={categoryOptions}
+						onchange={handleChangeCategory} ></lightning-combobox>
+				</div>
+					
+					
+				
+			</lightning-layout-item>
+			<lightning-layout-item padding="around-small" size="9">
+			<div class="slds-grid slds-float_right">
+				<div class="slds-col">
+				<lightning-input value={queryTerm}  onchange={handleKeyUp} type="search" label="" placeholder="Search"> </lightning-input>
+				</div>
+				<div class="slds-col" style="padding-top: 15px;padding-right: 3px;padding-left: 3px;">
+				<button class="slds-button slds-button_neutral slds-float_right" onclick={handleAddQuestion}>+ Add</button>
+				</div>
+				<div class="slds-col" style="padding-top: 15px;padding-right: 3px;padding-left: 3px;">
+				<button class="slds-button slds-button_neutral slds-float_right" onclick={handleAddClient}>Upload</button>
+				</div>
+				<div class="slds-col" style="padding-top: 15px;padding-right: 3px;padding-left: 3px;">
+				<button class="slds-button slds-button_neutral slds-float_right" onclick={handleAddClient}>Download</button>
+				</div>
+			</div>
+			</lightning-layout-item>
+		</lightning-layout>
+		<table id="sortable" style="border-collapse: collapse;width: 100%;">
+			<thead>
+				<tr style="border-bottom: 1px solid #000; padding: 35px;">
+					<th></th>
+					<th>Screen</th>
+					<th>Modules</th>
+					<th>Rule Category</th>
+					<th>Selection Type</th>
+					<th>Question</th>
+					<th>Actions</th>
+					
+				</tr>
+			</thead>
+			<tbody>
+				<template iterator:it={records}>
+				 
+					<tr class="slds-table slds-table_cell-buffer slds-table_bordered slds-hint-parent" key={it.value.questObj.Id} style="cursor: pointer;" >                        
+						
+						<td>
+						<lightning-button-icon icon-name={it.value.iconClicked} onclick={hideAndShow} data-record-id={it.index} variant="bare"  class="aiconb">
+						
+							<a href="javascript:void(0);" onclick={hideAndShow} data-record-id={it.index} style="display:block;text-decoration:none;color:black;">
+							 </a>
+						
+						</lightning-button-icon>
+						</td>
+						   
+						
+						<td data-label="Screen" style="padding-left: 12px;">
+							<template if:true={it.value.questObj.Module__r.Screen__c}>						
+							<a href="javascript:void(0);" onclick={hideAndShow} data-record-id={it.index} style="display:block;text-decoration:none;color:black;">    {it.value.questObj.Module__r.Screen__r.Name}             
+								
+							</a>
+							</template>
+							<template if:false={it.value.questObj.Module__r.Screen__c}>						
+							<a href="javascript:void(0);" onclick={hideAndShow} data-record-id={it.index} style="display:block;text-decoration:none;color:black;">    <p>--</p>            
+								
+							</a>
+							</template>
+						</td>
+					   
+						<td data-label="Modules" style="padding-left: 12px;">
+							<a href="javascript:void(0);" onclick={hideAndShow} data-record-id={it.index} style="display:block;text-decoration:none;color:black;">                 
+								{it.value.questObj.Module__r.Name}
+							</a>
+						</td>
+						<td data-label="Rule Category" style="padding-left: 12px;">
+							<template if:true={it.value.questObj.Module__r.Category__c}>
+							<a href="javascript:void(0);" onclick={hideAndShow} data-record-id={it.index} style="display:block;text-decoration:none;color:black;">            {it.value.questObj.Module__r.Category__r.Name}    
+								
+							</a>
+							</template>
+							<template if:false={it.value.questObj.Module__r.Category__c}>
+								<p>--</p> 
+							</template>
+						</td>
+						<td data-label="Selection Type" style="padding-left: 12px;">
+							<a href="javascript:void(0);" onclick={hideAndShow} data-record-id={it.index} style="display:block;text-decoration:none;color:black;">              {it.value.questObj.Question_Type__c}   
+								
+							</a>
+						</td>
+						<td data-label="Question" style="padding-left: 12px;width: 100%;word-break: break-all;">
+							<a href="javascript:void(0);" onclick={hideAndShow} data-record-id={it.index} style="display:block;text-decoration:none;color:black;">   
+								{it.value.questObj.Name}                
+							</a>
+						</td>    
+					
+						<td data-label="Actions" style="padding-left: 12px;">
+							<lightning-button-icon icon-name="utility:edit" onclick={editRowHandle} data-record-id={it.value.questObj.Id} variant="bare" class="aiconb">
+							</lightning-button-icon>
+							<!--lightning-button-icon icon-name="utility:delete" onclick={deleteRowHandle} data-record-id={it.value.prId} variant="bare" class="aiconb" style="padding-left: 12px;">
+							</lightning-button-icon-->
+						</td> 
+					</tr>  
+				</template>
+			</tbody>
+		</table>  
+	</template>
+	<template if:true={isEditQuestion}>
+	
+		<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+		   <div class="slds-modal__container">
+			<!-- modal header start -->
+			  <header class="slds-modal__header">
+				 <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={hideModalBox}>
+					<lightning-icon icon-name="utility:close"
+					   alternative-text="close"
+					   variant="inverse"
+					   size="small" ></lightning-icon>
+					<span class="slds-assistive-text">Close</span>
+				 </button>
+				 
+				<h3 slot="title">
+					<lightning-icon icon-name="utility:connected_apps" size="small"></lightning-icon>
+					Add New Question
+				</h3>
+			  </header>
+		  
+			  <!-- modal body start -->
+			  <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
+				<lightning-textarea name="questionInput" label="Question Label"  value={questionLabel} onchange={handleQuestionLabel}></lightning-textarea>
+				<lightning-combobox
+					name="module"
+					label="Module"
+					value={selectedModule}            
+					options={categoryOptions}
+					onchange={handleQuestionCategory} ></lightning-combobox>
+				
+					<div class="slds-float_right" style="padding-top: 5px;">
+					<lightning-button
+						class="slds-m-top_small "
+						onclick={createQuestion}
+						label="Create"
+					>
+					</lightning-button>
+					
+					<lightning-button label="Cancel" onclick={hideModalBox} class="slds-m-left_x-small"></lightning-button>
+					</div>
+				
+			  </div>
+		   
+		   </div>
+		</section>
+		<div class="slds-backdrop slds-backdrop_open"></div>
+	
+	</template>
+	<template if:true={isAddQuestion}>
+		
+		<lightning-layout multiple-rows="true">
+			<!--lightning-layout-item padding="around-small" size="12">
+				<div class="slds-grid slds-gutters">
+					<div  class="slds-col">
+						<lightning-combobox
+							name="screen"
+							label="Screen"
+							value={screenValue}            
+							options={screenOptions}
+							onchange={handleScreenChange} ></lightning-combobox>
+					</div>
+					<div class="slds-col">
+						<lightning-combobox
+					name="module"
+					label="Module"
+					value={selectedModule}            
+					options={categoryOptions}
+					onchange={handleQuestionCategory} ></lightning-combobox>
+					</div>
+					<div class="slds-col">
+						<lightning-combobox
+					name="ruleCategory"
+					label="Rule Category"
+					value={selectedRuleCategory}            
+					options={ruleCategoryOptions}
+					onchange={handleRuleCategory} ></lightning-combobox>
+					</div-->
+					<!--div class="slds-col">
+						<lightning-combobox
+							name="selectionType"
+							label="Selection Type"
+							value={selectionTypeValue}            
+							options={TypePicklistValues.data.values}
+							onchange={handleSelectionTypeChange} ></lightning-combobox>
+					</div>
+				</div>
+			</lightning-layout-item-->
+			<lightning-layout-item padding="around-small" size="3">
+				<lightning-combobox
+							name="screen"
+							label="Screen"
+							value={screenValue}            
+							options={screenOptions}
+							onchange={handleScreenChange} ></lightning-combobox>
+			</lightning-layout-item>
+			<lightning-layout-item padding="around-small" size="3">
+				<lightning-combobox
+					name="module"
+					label="Module"
+					value={selectedModule}            
+					options={categoryOptions}
+					onchange={handleQuestionCategory} ></lightning-combobox>
+			</lightning-layout-item>
+			<lightning-layout-item padding="around-small" size="3">
+				<lightning-combobox
+							name="selectionType"
+							label="Selection Type"
+							value={selectionTypeValue}            
+							options={TypePicklistValues.data.values}
+							onchange={handleSelectionTypeChange} ></lightning-combobox>
+			</lightning-layout-item>
+			<lightning-layout-item padding="around-small" size="4">
+				<lightning-textarea name="questionInput" label="Question Label"  value={questionLabel} onchange={handleQuestionLabel}></lightning-textarea>
+			</lightning-layout-item>
+			<lightning-layout-item padding="around-small" size="4">
+				<lightning-textarea name="questionDescription" label="Question Description"  value={questionDescription} onchange={handleQuestionDescription}></lightning-textarea>
+			</lightning-layout-item>
+		</lightning-layout>
+		
+		<!--lightning-layout multiple-rows="true">
+			<lightning-layout-item padding="around-small" size="6">
+				<lightning-textarea name="questionInput" label="Question Label"  value={questionLabel} onchange={handleQuestionLabel}></lightning-textarea>
+			</lightning-layout-item>
+			<lightning-layout-item padding="around-small" size="6">
+				<lightning-textarea name="questionDescription" label="Question Description"  value={questionDescription} onchange={handleQuestionDescription}></lightning-textarea>
+			</lightning-layout-item>
+		</lightning-layout-->
+		<div class="slds-grid slds-gutters">
+			<div  class="slds-col">
+				<div class="slds-float_right" style="padding-top: 5px;padding-right: 10px;">
+				<lightning-button label="Cancel" onclick={hideModalBox} class="slds-m-left_x-small"></lightning-button>
+					<lightning-button label="Save and Next" onclick={handleSaveAndNext} class="slds-m-left_x-small"></lightning-button>
+				</div>
+			</div>
+		</div>
+	</template>
+	
+	<template if:true={isAddQuestionWithOptions}>
+		<div class="slds-float_right" style="padding-top: 5px;padding-right: 10px;">
+			<lightning-button label="Add Option" onclick={handleCreateOption}></lightning-button>
+			<lightning-button label="Cancel" onclick={hideAddQuestionOptions} class="slds-m-left_x-small"></lightning-button>
+		</div>
+		<div onchange={HandleAddOption} for:each={optionItems} data-id={item.id} for:item="item" key={item.id}>
+			<lightning-layout multiple-rows="true">
+				<lightning-layout-item padding="around-small" size="12">
+					<div class="slds-grid slds-gutters">
+						<div  class="slds-col">
+							<lightning-input name="optionLabel" value={option1} onchange={handleCompetitorChange} type="text" label="Option 1" ></lightning-input>
+							
+						</div>
+						<div  class="slds-col" style="padding-top: 25px;">
+							<lightning-input type="checkbox" label="Default" name="inputCheckbox" onchange={handleCheckBoxChange} ></lightning-input>
+						</div>
+					</div>
+				</lightning-layout-item>
+			</lightning-layout>
+			<lightning-layout multiple-rows="true">
+				<lightning-layout-item padding="around-small" size="12">
+					<lightning-textarea name="optionDescription" label="Option Description"  value={optionDescription} onchange={handleOptionDescription}></lightning-textarea>
+				</lightning-layout-item>
+			</lightning-layout>
+			<lightning-layout multiple-rows="true">
+				<lightning-layout-item padding="around-small" size="12">
+					<div class="slds-grid slds-gutters">
+						<div  class="slds-col">
+							<lightning-input name="optionNextStep" onchange={handleNextStepChange} type="text" label="Next Step" ></lightning-input>
+							<lightning-input name="optionDetailToCapture"  onchange={handleDetailToCaptureChange} type="text" label="Details To Be Captured" ></lightning-input>
+							<lightning-input name="optionIntNxtStep" onchange={handleInternalNextStepChange} type="text" label="Internal Next Steps" ></lightning-input>
+						</div>
+						<div class="slds-col">
+							<lightning-input name="optionNextActnItmScreen" onchange={handleNextStepChange} type="text" label="Next Action Items Screen" ></lightning-input>
+							<lightning-input name="optionBrdRule" onchange={handleNextStepChange} type="text" label="BRD Rule" ></lightning-input>
+							
+						</div>
+						
+					</div>
+					<div class="slds-float_right" style="padding-top: 5px;padding-right: 10px;">
+						<lightning-button label="+ Add GP" onclick={showGP} class="slds-m-left_x-small"></lightning-button>
+					</div>
+				</lightning-layout-item>
+			</lightning-layout>
+			<template if:true={isShowGP}>
+				<c-zec_-global-parameter></c-zec_-global-parameter>
+			</template>
+		</div>
+		
+		<template if:true={isAddOptionClicked}>
+		<div class="slds-grid slds-gutters">
+			<div  class="slds-col">
+				<div class="slds-float_right" style="padding-top: 5px;padding-right: 10px;">
+					<lightning-button label="Cancel" onclick={hideAddQuestionOptions} class="slds-m-left_x-small"></lightning-button>
+					<lightning-button label="Save" onclick={handleSaveOptions} class="slds-m-left_x-small"></lightning-button>
+				</div>
+			</div>
+		</div>
+	</template>
+	</template>
+</template>

@@ -1,0 +1,47 @@
+<template>
+
+    <div class="demo-only slds-size_4-of-4">
+        <div class="slds-media slds-media_responsive">
+            <span if:true={counter} class="counter-badge">{counter}</span>
+            <div class="slds-media__body" style="margin-left:10px;">
+                <span class="question-label">{radioLabel}</span>
+                <span style="padding-left:5px"><lightning-helptext content={radioDescription}></lightning-helptext></span>
+            </div>
+        </div>
+    </div>
+
+    <div style="margin: 15px 25px;">
+        <template if:true={image}>
+            <div style="margin:10px">
+                <span>
+                    <img src={image} data-value={image} onclick={openImage} style="width: 200px;height: auto;object-fit: cover;cursor: pointer;"/>
+                </span>
+            </div>
+        </template>
+        <div>
+            <lightning-textarea disabled={isReadOnly} name="input2" variant="label-hidden" label="Textarea field with a predefined value" value={value} onchange={handleChange}></lightning-textarea>
+        </div>
+        <div style="margin: 15px 0 5px 0;"> 
+           
+            <span style="margin-left:10px">
+                <lightning-button-icon onclick={handleNotes} size="small" icon-name="utility:note" alternative-text="Connected" title="Notes">
+                </lightning-button-icon>
+            </span>
+           
+        </div>
+    </div>
+
+  
+    <template if:true={showOther}>
+        <lightning-input value={otherField} type="text" label="Please input comment for other" onchange={handleOtherField} onblur={handleBlur}></lightning-input>
+    </template>
+
+    <template if:true={openNotes}>
+        <c-zec_-notes-modal is-read-only={isReadOnly} currentquestionid={currentquestionid} textareavalue={notesValue} onclosenotes= {handleCloseNotes}></c-zec_-notes-modal>
+    </template>
+
+    <template if:true={previewImage}>
+        <c-zec_-preview-image oncloseimage={handleCloseImage} image={image}></c-zec_-preview-image>
+    </template>
+    
+</template>

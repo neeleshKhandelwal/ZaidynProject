@@ -1,0 +1,106 @@
+.THIS{
+    font-family: 'Open Sans';
+    font-style: normal;
+}
+
+li { padding: 3px 0 3px 0; }
+.slds-radio .slds-radio_faux {  height: 0.8rem !important; width: 0.8rem !important; }
+.slds-radio .slds-form-element__label{ font-size:12px !important; }
+
+selectionClass{
+    box-shadow: inset 0 -3em 3em rgba(0, 0, 0, 0.1), 0 0 0 2px rgb(255, 255, 255),0.3em 0.3em 1em rgba(0, 0, 0, 0.3);
+}
+
+.slds-form-element__icon{
+    padding-top: 0 !important;
+    padding-left: 5px !important;
+}
+
+.slds-card{
+    border: none;
+}
+
+.page-heading{
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 22px;
+    padding: 16px 24px;
+    color: #2F2C3C;
+    background: #FAFAFA;
+}
+
+.step-badge{
+    background: #EEEEFF;
+    padding: 3px 6px;
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 10px;
+    color: #2B44C7;
+    text-transform: uppercase;
+    border-radius: 20px;
+    letter-spacing: 0.15px;
+}
+
+.step-name{
+    float: left;
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    color: #2F2C3C;
+    margin-top: 4px;
+}
+.step-box{
+    display: grid;
+    background: #FAFAFA;
+    padding: 8px 10px 8px 16px;
+    cursor: pointer;
+}
+.active-step .step-box{
+    background: #EEEEFF;
+}
+.step-container{
+    border-left: 3px solid #DEDDDF;
+    background: #fff;
+    padding: 0;
+    height: 490px;
+    overflow: auto;
+    border-radius: 0;
+}
+
+.question-container{
+    padding: 16px;
+    margin: 16px;
+    height: 420px;
+    overflow: auto;
+}
+
+.question-container::-webkit-scrollbar-track
+{
+	border-radius: 8px;
+	background-color: #F5F5F5;
+}
+
+.question-container::-webkit-scrollbar
+{
+	width: 8px;
+	background-color: #F5F5F5;
+}
+
+.question-container::-webkit-scrollbar-thumb
+{
+	border-radius: 8px;
+	background-color:#87848D;;
+}
+
+.module-heading{
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    background: #fff;
+    color: #2F2C3C;
+    padding: 16px 24px;
+}

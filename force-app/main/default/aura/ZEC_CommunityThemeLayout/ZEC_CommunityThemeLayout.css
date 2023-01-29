@@ -1,0 +1,44 @@
+.THIS .logo-container {
+    
+    background-color:#2e3541;
+    min-height: 100vh;
+    max-width: 89px;
+    text-align: center;
+   
+}
+
+.THIS .logo {
+    width: 60px;
+    height: 60px;
+    outline: 0;
+    margin-top: 16px;
+}
+
+.THIS .icon-container{
+    margin-top: calc(71vh - 140px);
+    margin-left: 18px;
+    position: fixed;
+}
+
+.THIS .icon-logout{
+    margin-top: calc(40vh - 140px);
+    
+    
+}
+.THIS .icon{
+    color: white;
+}
+
+.THIS .icon-menu{
+    padding-top: 13px;
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: white;
+    gap: 5px;
+
+}
+.THIS .theme-layout{
+    background-color: #F0F0F0;
+}

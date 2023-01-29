@@ -1,0 +1,124 @@
+<template>
+    <div class="container">
+        <div class="left-panel">
+            <div class="container theme-layout" style="background-color: #1A1628;width: 80px; font-size:9px;" >
+        <div class="slds-col logo-container">
+            <div class=" pure-menu custom-display">
+                <ul class="pure-menu-list">
+                            <li class="pure-menu-item">
+                                <img class="logo" src={ZECResource} style="width:40px;height:auto;"/>
+                    </li>
+                            <li class="pure-menu-item">
+                                <a href="#" class="pure-menu-link afl">
+                                    <img src={HomeIcon} />
+                                    <p class="menu-text">Home</p>
+                                </a>
+                    </li>
+                            <li class="pure-menu-item pure-menu-has-children pure-menu-allow-hover">
+                                <img src={RequirementGatheringIcon} />
+                                <p class="pure-menu-link menu-text afl">Req. Gathering</p>
+                        <ul class="pure-menu-children">
+                                    <li class="pure-menu-heading">
+                                        Requirements Gathering
+                                    </li>
+                            <li class="pure-menu-item">
+                                <a onclick={showReqGathering} class="pure-menu-link">Business Rules</a>
+                            </li>
+                            <li class="pure-menu-item">
+                                        <a onclick={showReviewReq} class="pure-menu-link">Review Requirements</a>
+                            </li>
+                            <li class="pure-menu-item">
+                                <a onclick={showZdmConfig} class="pure-menu-link">ZDM Configuration</a>
+                            </li>
+                        </ul>
+                    </li>
+                            <li class="pure-menu-item">
+                                <a onclick={showActionTracker} class="pure-menu-link afl">
+                                    <img src={ActionTrackerIcon} />
+                                    <p class="menu-text">Action Tracker</p>
+                                </a>
+                    </li>
+                    <!--
+                            <li class="pure-menu-item">
+                                <a href="#" class="pure-menu-link afl">
+                                    <img src={UATIcon} />
+                                    <p class="menu-text">UAT</p>
+                                </a>
+                    </li>
+                    -->
+                            <li class="pure-menu-item">
+                                <a href="#" class="pure-menu-link afl">
+                                    <img src={MilestoneIcon} />
+                                    <p class="menu-text">Milestones</p>
+                                </a>
+                    </li>
+                    <!--
+                            <li class="pure-menu-item">
+                                <a href="#" class="pure-menu-link afl">
+                                    <img src={DataIcon} />
+                                    <p class="menu-text">Data</p>
+                                </a>
+                    </li>
+                    -->
+                            <li class="pure-menu-item">
+                                <a href="#" class="pure-menu-link afl">
+                                    <img src={AuditLogIcon} />
+                                    <p class="menu-text">Audit Logs</p>
+                                </a>
+                            </li>
+                            <li class="pure-menu-item">
+                                <a onclick={showSetting} class="pure-menu-link afl">
+                                    <img src={SettingIcon} />
+                                    <p class="menu-text">Settings</p>
+                                </a>
+                            </li>
+                            <li class="pure-menu-item">
+                                <a href="#" class="pure-menu-link afl">
+                                    <img src={UserIcon} />
+                                </a>
+                            </li>
+                            <!--
+
+                            <li class="pure-menu-item">
+                                <a href="#" class="pure-menu-link afl">
+                                    <img src={HelpIcon} />
+                                </a>
+                            </li>
+                            <li class="pure-menu-item">
+                                <a href="#" class="pure-menu-link afl">
+                                    <img src={SqaureIcon} />
+                                </a>
+                            </li>
+                            -->
+
+                </ul>
+            </div>
+        </div>
+            </div>
+        </div>
+        <div class="content-panel">
+            <c-zec_-project-selection onclientselected={handleGetProject}
+                project-list={projectList}
+                onprojectselected={handleprojectchange}
+                clientlist={accountList}
+                client-value={clientid}
+                project-value={projectid}
+                image-url={imageurl}></c-zec_-project-selection>
+            <template if:true={reqGatheringValue}>
+                <c-zec_-requirement-gathering projectid={projectid}></c-zec_-requirement-gathering>
+            </template>
+            <template if:true={actionTrackerValue}>
+                <c-zec_-action-tracker project-id={projectid}></c-zec_-action-tracker>
+            </template>
+            <template if:true={settingsValue}>
+                <c-zec_-client-onboarding></c-zec_-client-onboarding>
+            </template>
+            <template if:true={reviewReqValue}>
+                <c-zec_-review-requirement project-id={projectid}></c-zec_-review-requirement>
+            </template>
+            <template if:true={zdmConfigValue}>
+                <c-zec_-zdm-configuration project-id={projectid}></c-zec_-zdm-configuration>
+            </template>
+        </div>
+    </div>
+</template>

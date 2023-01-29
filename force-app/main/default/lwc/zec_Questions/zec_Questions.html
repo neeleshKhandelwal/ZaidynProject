@@ -1,0 +1,125 @@
+<template>
+    <template if:true={showSpinner}>
+		<lightning-spinner style="position:fixed" alternative-text="Loading" size="large"></lightning-spinner>
+	</template>
+    <lightning-layout multiple-rows>
+        <template if:true={questionList}>
+            <template for:each={questionList} for:item="que">
+                <template if:true={que.isRadio}>
+                    <lightning-layout-item size="12" key={que.Id}>
+                        <c-zec_-radio-button 
+                            is-read-only={isReadOnly}
+                            counter={que.counter} 
+                            image={que.Image__c} 
+                            options={que.options} 
+                            radio-label={que.Question_Title__c} 
+                            question-record={que} 
+                            radio-description={que.Description__c} 
+                            onanswers={handlesaveAnswers} 
+                            answers ={que.answers}
+                            value={que.value}
+                            show-other={que.showother}
+                            other-field={que.othercomment}
+                            apiitems={que.actionItems}>
+                        </c-zec_-radio-button>
+                    </lightning-layout-item>
+                </template>
+                <template if:true={que.isCombo}>
+                    <lightning-layout-item size="12" key={que.Id}>
+                        <c-zec_-multi-select-combobox
+                            is-read-only={isReadOnly}
+                            counter={que.counter}
+                            question-record={que}
+                            label={que.Question_Title__c}
+                            show-pills="true"
+                            combobox-desc={que.Description__c}
+                            combobox-image={que.Image__c}
+                            name="options"
+                            options={que.options}
+                            onchange={handleChangeMultiSelect}
+                            onanswers={handlesaveAnswers}
+                            api-selected-options={que.value}
+                            show-other={que.showother}
+                            other-field={que.othercomment}
+                            apiitems={que.actionItems}
+                        ></c-zec_-multi-select-combobox>
+                    </lightning-layout-item>
+                </template>
+                <template if:true={que.isMultiSelect}>
+                    <lightning-layout-item size="12" key={que.Id}>
+                        <c-zec_-multi-checkbox 
+                            is-read-only={isReadOnly}
+                            value={que.value} 
+                            counter={que.counter} 
+                            image={que.Image__c} 
+                            options={que.options}
+                            multi-checbox-label={que.Question_Title__c} 
+                            question-record={que}
+                            multi-checbox-desc={que.Description__c} 
+                            onanswers={handlesaveAnswers} 
+                            show-other={que.showother}
+                            other-field={que.othercomment} 
+                            apiitems={que.actionItems}>
+                        </c-zec_-multi-checkbox>
+                    </lightning-layout-item>
+                </template>
+                <template if:true={que.isText}>
+                    <lightning-layout-item size="12" key={que.Id}>
+                        <c-zec_-free-text  
+                            is-read-only={isReadOnly}
+                            value={que.value} 
+                            counter={que.counter} 
+                            image={que.Image__c} 
+                            options={que.options} 
+                            radio-label={que.Question_Title__c} 
+                            question-record={que}
+                            radio-description={que.Description__c} 
+                            onanswers={handlesaveAnswers} 
+                            show-other={que.showother}
+                            other-field={que.othercomment} 
+                            apiitems={que.actionItems}>
+                        </c-zec_-free-text>
+                    </lightning-layout-item>
+                </template>
+            </template>
+        </template>
+        <lightning-layout-item size="12" padding="around-small">
+           
+        
+        <div class="slds-clearfix" >
+            <template if:true={showButton}>
+                <lightning-button
+                    variant="brand"
+                    label="Previous"
+                    onclick={handlePrevious}
+                ></lightning-button>
+                &nbsp;&nbsp;
+                <lightning-button
+                    variant="brand"
+                    label="Next"
+                    onclick={handleNext}
+                ></lightning-button>
+            </template>
+            <div class="slds-float_right">
+                
+                
+                <lightning-button
+                    if:false={isReadOnly}
+                    variant="brand"
+                    label="Save"
+                    onclick={handleSave}
+                ></lightning-button>
+                <template if:true={currentScreen.Get_Sign_Off__c}>
+                    &nbsp;&nbsp;
+                    <lightning-button
+                        if:false={isReadOnly}
+                        variant="brand"
+                        label="Sign-off & Next"
+                        onclick={handleSignOff}
+                    ></lightning-button>
+                </template>
+            </div>
+        </div>
+        </lightning-layout-item>
+    </lightning-layout>
+ </template>

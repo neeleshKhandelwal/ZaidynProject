@@ -1,0 +1,41 @@
+<template>
+  <div class="c-container slds-theme_shade slds-p-around_large">
+    <div>
+      <lightning-layout horizontal-align="spread">
+        <lightning-layout-item>
+          <lightning-input value={queryTerm} onchange={handleKeyUp} type="search" placeholder="Input search text"></lightning-input>
+        </lightning-layout-item>
+        <lightning-layout-item>
+          <lightning-button label="Download" variant="brand" onclick={downloadTable} class="slds-m-left_x-small">
+          </lightning-button>
+        </lightning-layout-item>
+      </lightning-layout>
+    </div>
+    <div class="slds-m-top_large">
+      <table class="slds-table slds-no-row-hover">
+        <thead>
+          <tr>
+            <th>Question</th>
+            <th>Notes</th>
+          </tr>
+          <tr>
+            <th></th>
+            <th>Note</th>
+            <th>Created Date</th>
+            <th>Created By</th>
+          </tr>
+        </thead>
+        <tbody>
+          <template for:each={questionNotes} for:item="item" for:index="index">
+            <tr key={item.Id} class="slds-border_bottom">
+              <td>{item.Question__r.Name}</td>
+              <td>{item.Comment__c}</td>
+              <td>{item.CreatedBy.Name}</td>
+              <td>{item.CreatedDate}</td>
+            </tr>
+          </template>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</template>

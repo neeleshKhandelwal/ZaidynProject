@@ -1,0 +1,77 @@
+<template>
+   
+
+
+    <div class="demo-only slds-size_4-of-4">
+        <div class="slds-media slds-media_responsive">
+            <span if:true={counter} class="counter-badge" >{counter}</span>
+            <div class="slds-media__body" style="margin-left:10px;">
+                <span class="question-label">{radioLabel}</span>
+                <span style="padding-left:5px"><lightning-helptext class="helptext1" content={radioDescription}></lightning-helptext></span>
+            </div>
+        </div>
+    </div>
+        
+   
+    <div style="margin: 15px 25px;">
+        <template if:true={image}>
+            <div style="margin:10px">
+                <span >
+                    <img src={image} data-value={image} onclick={openImage} style="width: 200px;height: auto;object-fit: cover;cursor: pointer;"/>
+                </span>
+            </div>
+        </template>
+        <div>
+            <lightning-layout multiple-rows>
+                <lightning-layout-item size="12">
+                    <lightning-radio-group name={radioLabel}
+                        label=""
+                        variant="label-hidden"
+                        options={options}
+                        value={value}
+                        onchange={handleChange}
+                        disabled={isReadOnly}
+                        type="radio"></lightning-radio-group>
+                </lightning-layout-item>
+                <lightning-layout-item size="6">
+                    <template if:false={showCustomize}>
+                        <lightning-button if:false={isReadOnly} variant="brand" label="+ Customize" title="Customize Button" onclick={handleCustomize} class="slds-m-left_x-small"></lightning-button>
+                    </template>
+                    <template if:true={showCustomize}>
+                        <c-zec_-customize-option is-read-only={isReadOnly} question={questionRecord} onclosecustomize={closeCustomize}> </c-zec_-customize-option>
+                    </template>
+                </lightning-layout-item>
+            </lightning-layout>
+        </div>
+        <div class="file-wrapper"> 
+           
+            <span class="slds-m-left_x-small">
+                <lightning-button-icon onclick={handleNotes} size="small" icon-name="utility:note" alternative-text="Connected" title="Notes">
+                </lightning-button-icon>
+            </span>
+           
+        </div>
+        <template if:true={showitems}>
+            <div style="margin-bottom:5px;padding: 8px 15px;border-radius: var(--lwc-borderRadiusMedium,0.25rem);border: var(--lwc-borderWidthThin,1px) solid var(--lwc-colorBorder,rgb(229, 229, 229));">
+                <c-zec_-action-item is-read-only={isReadOnly} action-items={items}></c-zec_-action-item>  
+            </div>
+        </template>
+    </div>
+    
+    
+  
+    <template if:true={showOther}>
+        <lightning-input value={otherField} type="text" label="Please input comment for other" onchange={handleOtherField} onblur={handleBlur}></lightning-input>
+    </template>
+
+    <template if:true={openNotes}>
+        <c-zec_-notes-modal is-read-only={isReadOnly} currentquestionid={currentquestionid} textareavalue={notesValue} onclosenotes= {handleCloseNotes}></c-zec_-notes-modal>
+    </template>
+
+ 
+
+    <template if:true={previewImage}>
+        <c-zec_-preview-image oncloseimage={handleCloseImage} image={image}></c-zec_-preview-image>
+    </template>
+    
+</template>

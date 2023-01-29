@@ -1,0 +1,27 @@
+<template>
+    <template if:false={hideUpload}>
+        <lightning-file-upload
+            label=""
+            name="fileUploader"
+            file-field-name= "Action_Item_fileupload__c"
+            file-field-value={actionitemchoice}
+            record-id={record}
+            onuploadfinished={handleUploadFinished}
+            disabled={isReadOnly}
+        >
+        </lightning-file-upload>
+    </template>
+    <template if:true={hideUpload}>
+        <lightning-layout multiple-rows>
+            <lightning-layout-item size="8" >
+                <span><b>{uploadedFileName}</b></span>
+            </lightning-layout-item>
+            <lightning-layout-item size="1">
+                <lightning-button-icon icon-name="utility:download" onclick={handleDownload}   alternative-text="Download"   class="slds-m-left_xx-small" title="Download"></lightning-button-icon>
+            </lightning-layout-item>
+            <lightning-layout-item size="1" class="slds-p-horizontal_medium">
+                <lightning-button-icon if:false={isReadOnly} icon-name="utility:delete" onclick={handleDelete}   alternative-text="Delete"   class="slds-m-left_xx-small" title="Delete"></lightning-button-icon>
+            </lightning-layout-item>
+        </lightning-layout>
+    </template>
+</template>

@@ -1,0 +1,515 @@
+<template>
+	<div class="slds-card">	
+        <div class="slds-p-around_medium slds-page-header slds-page-header_record-home" style="background-color:#FAFAFA">	
+			<b style="font-size: 24px;">All Projects</b>
+		</div>
+	</div>
+    <div class="slds-box">
+        
+            <lightning-tabset >
+                <lightning-tab label="Project Onboarding">
+				<template if:false={addClient}>
+					<!--div class="slds-float_right">
+						<button class="slds-button slds-button_neutral" onclick={handleAddClient}>+ Add Client</button>
+					</div-->
+					<div class="slds-m-around_medium">
+						<lightning-layout multiple-rows>
+							<lightning-layout-item size="2" style="margin-top: 5px;">
+									<lightning-input type="search" label="" placeholder="Search" onchange={handleAccountSearch}></lightning-input>
+								</lightning-layout-item>
+								<lightning-layout-item size="2" style="padding-left: 3px;">
+										<lightning-input type="date" name="from" label="From" onchange={handleFromDate} class="aiconb"></lightning-input>
+								</lightning-layout-item>
+								<lightning-layout-item size="2" style="padding-left: 3px;">
+									<!--div class="slds-col"-->
+										<lightning-input type="date" name="to" label="To" onchange={handleToDate} class="aiconb"></lightning-input>
+									<!--/div-->
+								</lightning-layout-item>
+									<!--PAGE NAVIGATION-->
+									<!--div class="slds-col" style="margin-top: 19px;">
+										
+										<lightning-button disabled={bDisableFirst} icon-name="utility:chevronleft" label="" alternative-text="Previous" onclick={previousPage} style="width: 35px;"></lightning-button>
+										&nbsp;
+										<span class="slds-badge">Showing {pageNumber} &nbsp;of&nbsp; {totalPages} &nbsp;&nbsp;Page(s)</span>
+										&nbsp;
+										<lightning-button disabled={bDisableLast} icon-name="utility:chevronright" label="" alternative-text="Next" onclick={nextPage} class="slds-p-horizontal_x-small" style="width: 35px;"></lightning-button>
+										
+									</div-->
+									<!--TOTAL RECORDS>
+									<div class="slds-clearfix">
+										<div class="slds-float_right">
+											<span class="slds-badge"> Total Records: {totalRecords}</span>
+										</div>
+									</div-->
+								<!--/div-->
+							<lightning-layout-item size="2">
+							</lightning-layout-item>
+							
+							<lightning-layout-item size="4" padding="around-small" style="margin-top: 8px;">
+							<!--PAGE NAVIGATION-->
+								<!--div class="slds-col" style="margin-top: 19px;"-->
+										<!--lightning-button disabled={bDisableFirst} icon-name="utility:jump_to_left" label="First" class="slds-p-horizontal_x-small" alternative-text="first page" onclick={firstPage}></lightning-button-->
+										<lightning-button variant="base" disabled={bDisableFirst} icon-name="utility:chevronleft" label="" onclick={previousPage} ></lightning-button>
+										&nbsp;
+										<span class="slds-badge">Showing {pageNumber} &nbsp;of&nbsp; {totalPages} &nbsp;&nbsp;Page(s)</span>
+										&nbsp;
+										<lightning-button variant="base" disabled={bDisableLast} icon-name="utility:chevronright" label="" onclick={nextPage} class="slds-p-horizontal_x-small" ></lightning-button>
+										<!--lightning-button disabled={bDisableLast} icon-name="utility:jump_to_right" label="Last" alternative-text="last page" onclick={lastPage} icon-position="right"></lightning-button-->
+									<!--/div-->
+								<button class="slds-button slds-button_neutral slds-float_right" onclick={handleAddClient}>+ Add Project</button>
+								
+							</lightning-layout-item>
+						</lightning-layout>
+						<template if:true={data}>
+							<!--lightning-datatable key-field="prId" data={recordsToDisplay} columns={columns} 
+												 hide-checkbox-column
+												 wrap-text-max-lines="3"												 
+												 default-sort-direction={defaultSortDirection}
+												 sorted-direction={sortDirection}
+												 sorted-by={sortedBy}
+												 onsort={onHandleSort}
+												 onrowaction={handleRowAction}>
+							</lightning-datatable-->
+							
+							<table id="sortable">
+								<thead>
+									<tr style="border-bottom: 1px solid #000; padding: 35px;">
+										<th><a data-id="Project" onclick={sort}>Project &nbsp;
+															<lightning-button-icon class="aiconb" icon-name="utility:sort" variant="bare" alternative-text="sort" title="Sort">
+															</lightning-button-icon></a></th>
+										<th><a data-id="Client" onclick={sort}>Client &nbsp;
+															<lightning-button-icon class="aiconb" icon-name="utility:sort" variant="bare" alternative-text="sort" title="Sort">
+															</lightning-button-icon></a></th>
+										<th><a data-id="Modules" onclick={sort}>Modules &nbsp;
+															<lightning-button-icon class="aiconb" icon-name="utility:sort" variant="bare" alternative-text="sort" title="Sort">
+															</lightning-button-icon></a></th>
+										<th><a data-id="Users" onclick={sort}>Users &nbsp;
+															<lightning-button-icon class="aiconb" icon-name="utility:sort" variant="bare" alternative-text="sort" title="Sort">
+															</lightning-button-icon></a></th>
+										<th><a data-id="LastModified" onclick={sort}>Last Modified &nbsp;
+															<lightning-button-icon class="aiconb" icon-name="utility:sort" variant="bare" alternative-text="sort" title="Sort">
+															</lightning-button-icon></a></th>
+										<th><a data-id="Actions" onclick={sort}>Actions</a></th>
+										
+										
+									</tr>
+								</thead>
+								<tbody>
+									<template iterator:it={recordsToDisplay}>
+									 
+										<tr class="slds-table slds-table_cell-buffer slds-table_bordered slds-hint-parent" key={it.value.prId} style="cursor: pointer;" >                        
+											
+											<!--td>
+											<lightning-button-icon icon-name={it.value.iconClicked} onclick={hideAndShow} data-record-id={it.index} variant="bare"  class="aiconb">
+											
+												<a href="javascript:void(0);" onclick={hideAndShow} data-record-id={it.index} style="display:block;text-decoration:none;color:black;">
+												 </a>
+											
+											</lightning-button-icon>
+											</td-->
+											   
+											
+											<td data-label="Project" style="padding-left: 12px;">       
+												<a href="javascript:void(0);" data-record-id={it.value.prId} onclick={navigateToQuestionViewPage} style="display:block;text-decoration:none;">
+													{it.value.projectName}		
+												</a>
+												
+											</td>
+											
+											<td data-label="Client" style="padding-left: 12px;">
+																 
+													{it.value.clientName}
+												
+											</td>
+											<td data-label="Modules" style="padding-left: 12px;">
+																 
+													{it.value.modules}
+												
+											</td>
+											<td data-label="Users" style="padding-left: 12px;">
+												<template for:each={it.value.usersList} for:item="user" for:index="index">
+												  
+												  <span class="slds-badge" key={user.User__r.Id} onclick={navigateToUserViewPage}><a href="javascript:void(0);" data-record-id={user.User__r.Id} onclick={navigateToUserViewPage} style="display: inline-block;padding-inline: 2px; overflow: auto;">{user.User__r.Name}</a></span>
+													<!--lightning-badge label={user.User__r.Name} class="slds-badge_inverse"></lightning-badge-->		
+												
+													<!--p key={user.Id} style="display: inline;padding-inline: 2px;">
+														<lightning-badge label={user} class="slds-badge_inverse"></lightning-badge>
+													</p-->
+												</template>
+											</td>
+											<td data-label="Last Modified" style="padding-left: 12px;">
+												   
+													<lightning-formatted-date-time value={it.value.lastModifiedDate} year="numeric" day="2-digit" month="long"  hour="2-digit" minute="2-digit"></lightning-formatted-date-time> &nbsp; {it.value.lastModifiedName} 
+											</td>    
+											<td data-label="Actions" style="padding-left: 12px;">
+												<lightning-button-icon icon-name="utility:edit" onclick={editRowHandle} data-record-id={it.value.prId} variant="bare" class="aiconb">
+												</lightning-button-icon>
+												<lightning-button-icon icon-name="utility:delete" onclick={deleteRowHandle} data-record-id={it.value.prId} variant="bare" class="aiconb" style="padding-left: 12px;">
+												</lightning-button-icon>
+											</td> 
+											<!--td aria-selected="true" class="slds-cell-edit" role="gridcell" data-label="Actions" style="padding-left: 12px;">
+												<lightning-button-icon icon-name="utility:delete" data-record-id={it.index} variant="bare" class="aiconb">					
+												</lightning-button-icon>
+											</td--> 
+										</tr>
+													
+									</template>
+								</tbody>
+							</table>
+							
+							
+							
+							
+							
+							
+							
+						</template>
+						<template if:true={error}>
+							{error}
+						</template>
+						
+					</div>
+				
+                 </template>   
+					
+					<template if:true={addClient}>
+					<div style="padding-left: 40px;">
+						Fill in the following fields to add a new project.
+					</div>
+					  
+					  
+					  <div class="slds-p-bottom_large slds-p-left_large">
+						<div class="slds-grid slds-gutters">
+							
+							<div  class="slds-col">
+								<div class="slds-p-around_medium lgc-bg">
+									<div class="slds-p-top_xx-small">
+										Client Name
+									</div>
+									
+									<c-zec_-custom-lookup obj-name="Account" search-placeholder="Client Name" icon-name="standard:account" onlookupselected={handleAssigneeChange}> </c-zec_-custom-lookup>
+									<!--lightning-input type="text" label="Client Name" required></lightning-input-->
+								</div>
+								<div class="slds-p-around_medium">
+									<lightning-input value={projectName} onchange={handleProjectChange} type="text" label="Project Name" required></lightning-input>
+								</div>
+								<template if:true={isClientSelected}>
+									<div class="slds-p-around_medium">
+										<!--lightning-input type="file" label="Logo" required></lightning-input-->
+										<lightning-file-upload
+											label="Logo"
+											name="fileUploader"
+											record-id={newAssignee}
+											accept={acceptedFormats}
+											onuploadfinished={handleUploadFinished}
+										>
+										</lightning-file-upload>
+									</div>
+								</template>
+								
+								<div class="slds-p-around_medium lgc-bg">
+									<lightning-input value={competitorBrand} onchange={handleCompetitorChange} type="text" label="Competitor brands" ></lightning-input>
+								</div>
+							</div>
+							<div  class="slds-col">
+								<div class="slds-p-around_medium lgc-bg">
+									<lightning-input value={focusedHco} onchange={handleHcoChange} type="text" label="Focused HCOs" ></lightning-input>
+								</div>
+								<div class="slds-p-around_medium lgc-bg">
+									<lightning-input value={focusedHcp} onchange={handleHcpChange} type="text" label="Focused HCPs" ></lightning-input>
+								</div>
+								<div class="slds-p-around_medium lgc-bg">
+									<lightning-input value={clientBrand} onchange={handleClientBrandChange} type="text" label="Client brands" ></lightning-input>
+								</div>
+							</div>
+							<div  class="slds-col">
+								<div class="slds-p-around_medium lgc-bg">
+
+									<div class="slds-combobox_container">
+										<div class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open" aria-expanded="true" aria-haspopup="listbox" role="combobox">
+											<!-- Search Input -->
+											<div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right" role="none">
+												<lightning-input class="inputBox" placeholder="Select an Option" onblur={blurEvent} onclick={showOptions} onkeyup={filterOptions} value={searchString} auto-complete="off"  label="Module" id="combobox-id-1" ></lightning-input>
+												<lightning-icon class="slds-input__icon" icon-name="utility:down" size="xx-small" alternative-text="search" style="padding-top: 10px;"></lightning-icon>
+											</div>
+											<!-- Dropdown List -->
+											<template if:true={showDropdown}>
+												<div id="listbox-id-1" class="slds-dropdown slds-dropdown_length-5 slds-dropdown_fluid">
+													<ul class="slds-listbox slds-listbox_vertical recordListBox" role="presentation">
+														<template if:false={message} >
+															<template for:each={optionData} for:item="option">
+																<template if:true={option.isVisible}>
+																	<li key={option.value} data-id={option.value} onmousedown={selectItem} class="slds-listbox__item eachItem">
+																		<template if:true={option.selected}>
+																			<lightning-icon icon-name="utility:check" size="xx-small" alternative-text="icon" ></lightning-icon>
+																		</template>
+																		<span class="slds-media slds-listbox__option_entity verticalAlign slds-truncate">{option.label}</span>
+																	</li>
+																</template>
+															</template>
+														</template>
+														<template if:true={message} >
+															<li class="slds-listbox__item">
+																<span class="slds-media slds-listbox__option_entity verticalAlign slds-truncate">{message}</span>
+															</li>
+														</template>
+													</ul>
+												</div>
+											</template>
+										</div>
+									</div>
+									<!-- Multi Select Pills -->
+									<template for:each={optionData} for:item="option">
+										<template if:true={option.selected}>
+											<lightning-pill key={option.value} class="slds-m-around_xx-small" name={option.value} label={option.label} onremove={removePill}></lightning-pill>
+										</template>
+									</template>
+									
+								</div>
+								
+								<div class="slds-p-around_medium lgc-bg">
+									<div class="slds-form-element">
+										
+										<div class="slds-form-element__control">
+											<div class="slds-combobox_container">
+												
+												<div class={txtclassname} data-id="resultBox" aria-expanded="false" aria-haspopup="listbox" role="combobox">
+													<div class="slds-form-element__control slds-input-has-icon slds-input-has-icon slds-input-has-icon_left-right" role="none">
+														
+														
+														<lightning-input required={required} data-id="userinput" label="Users" name="searchText" onchange={searchField} class="leftspace"></lightning-input>
+														<span class="slds-icon_container slds-icon-utility-search slds-input__icon slds-input__icon_right" 
+														style="padding-top: 10px;">
+															<lightning-icon class="slds-icon slds-icon slds-icon_small slds-icon-text-default" icon-name="utility:search" size="xx-small" alternative-text="icon" ></lightning-icon>
+														</span>
+													</div>
+													<div class="slds-form-element__control slds-input-has-icon slds-input-has-icon slds-input-has-icon_left-right" role="none">
+														<template for:each={selectedRecords} for:item="serecord">
+															<span key={serecord.recId}>
+															<lightning-pill label={serecord.recName} name={serecord.recId} onremove={removeRecord}>
+																	<!--lightning-icon icon-name={iconName} variant="circle" alternative-text={serecord.recName}></lightning-icon-->
+																</lightning-pill>
+															</span>
+														</template>
+													</div>
+												
+													<!-- Second part display result -->
+													<div id="listbox-id-2" class="slds-dropdown slds-dropdown_length-with-icon-7 slds-dropdown_fluid" role="listbox">
+														<ul class="slds-listbox slds-listbox_vertical" role="presentation">
+															<template for:each={searchRecords} for:item="serecord">
+																<li role="presentation" class="slds-listbox__item" key={serecord.recId}>
+																	
+																	<div data-id={serecord.recId} data-name={serecord.recName} onclick={setSelectedRecord} class="slds-media slds-listbox__option slds-listbox__option_entity slds-listbox__option_has-meta" role="option">
+																		<span class="slds-media__figure">
+																			<span class="slds-icon_container slds-icon-standard-account">
+																				<!--lightning-icon icon-name={iconName} class="slds-icon slds-icon slds-icon_small slds-icon-text-default" size="x-small"></lightning-icon-->
+																			</span>
+																		</span>
+																		<span class="slds-media__body">
+																			<span class="slds-listbox__option-text slds-listbox__option-text_entity">{serecord.recName}</span>
+																			<span class="slds-listbox__option-meta slds-listbox__option-meta_entity">{objectName} • {serecord.recName}</span>
+																		</span>
+																	</div>
+																</li>
+															</template>
+														</ul>
+													</div>
+													<div if:true={messageFlag}>
+														No result found.
+													</div>
+													<div if:true={LoadingText}>
+														Loading...
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								
+								
+							</div>
+						  </div>
+						  
+						<div class="slds-float_right">
+							<lightning-button label="Cancel" onclick={handleAddClient} class="slds-m-left_x-small" style="padding-right: 10px;"></lightning-button>
+							<lightning-button
+								class="slds-m-top_small "
+								onclick={handleSave}
+								label="Save"
+							>
+							</lightning-button>							
+						</div>
+						<!--button class="slds-button slds-button_neutral slds-float_right" onclick={handleSave}>OK</button>
+						<button class="slds-button slds-button_neutral slds-float_right" onclick={handleAddClient}>Cancel</button-->
+						
+					</div>
+						
+					</template>
+					<template if:true={editProject}>
+						
+						<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+						   <div class="slds-modal__container">
+							<!-- modal header start -->
+							  <header class="slds-modal__header">
+								 <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={hideModalBox}>
+									<lightning-icon icon-name="utility:close"
+									   alternative-text="close"
+									   variant="inverse"
+									   size="small" ></lightning-icon>
+									<span class="slds-assistive-text">Close</span>
+								 </button>
+								 
+								<h3 slot="title">
+									<lightning-icon icon-name="utility:connected_apps" size="small"></lightning-icon>
+									Edit Project
+								</h3>
+							  </header>
+						  
+							  <!-- modal body start -->
+							  <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-3">
+								<div class="slds-grid slds-gutters">
+							
+									<div  class="slds-col">
+										<lightning-input type="text" label="Project Name" value={newProjectName} onchange={handleNewProjChange} class="inputComment"></lightning-input>
+										
+										
+										<div class="slds-form-element">
+											
+											<div class="slds-form-element__control">
+												<div class="slds-combobox_container">
+													
+													<div class={txtclassname} data-id="resultBox" aria-expanded="false" aria-haspopup="listbox" role="combobox">
+														<div class="slds-form-element__control slds-input-has-icon slds-input-has-icon slds-input-has-icon_left-right" role="none">
+															
+															
+															<lightning-input required={required} data-id="userinput" label="Users" name="searchText" onchange={searchField} class="leftspace"></lightning-input>
+															<span class="slds-icon_container slds-icon-utility-search slds-input__icon slds-input__icon_right"
+															style="padding-top: 10px;">
+																<lightning-icon class="slds-icon slds-icon slds-icon_small slds-icon-text-default" icon-name="utility:search" size="xx-small" alternative-text="icon" ></lightning-icon>
+															</span>
+														</div>
+														<div class="slds-form-element__control slds-input-has-icon slds-input-has-icon slds-input-has-icon_left-right" role="none">
+															<template for:each={selectedRecords} for:item="serecord">
+																<span key={serecord.recId}>
+																<lightning-pill label={serecord.recName} name={serecord.recId} onremove={removeRecord}>
+																		<!--lightning-icon icon-name={iconName} variant="circle" alternative-text={serecord.recName}></lightning-icon-->
+																	</lightning-pill>
+																</span>
+															</template>
+														</div>
+													
+														<!-- Second part display result -->
+														<div id="listbox-id-3" class="slds-dropdown slds-dropdown_length-with-icon-7 slds-dropdown_fluid" role="listbox">
+															<ul class="slds-listbox slds-listbox_vertical" role="presentation">
+																<template for:each={searchRecords} for:item="serecord">
+																	<li role="presentation" class="slds-listbox__item" key={serecord.recId}>
+																		
+																		<div data-id={serecord.recId} data-name={serecord.recName} onclick={setSelectedRecord} class="slds-media slds-listbox__option slds-listbox__option_entity slds-listbox__option_has-meta" role="option">
+																			<span class="slds-media__figure">
+																				<span class="slds-icon_container slds-icon-standard-account">
+																					<!--lightning-icon icon-name={iconName} class="slds-icon slds-icon slds-icon_small slds-icon-text-default" size="x-small"></lightning-icon-->
+																				</span>
+																			</span>
+																			<span class="slds-media__body">
+																				<span class="slds-listbox__option-text slds-listbox__option-text_entity">{serecord.recName}</span>
+																				<span class="slds-listbox__option-meta slds-listbox__option-meta_entity">{objectName} • {serecord.recName}</span>
+																			</span>
+																		</div>
+																	</li>
+																</template>
+															</ul>
+														</div>
+														<div if:true={messageFlag}>
+															No result found.
+														</div>
+														<div if:true={LoadingText}>
+															Loading...
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+								
+										
+									</div>
+									<div  class="slds-col">
+										
+										<div class="slds-combobox_container">
+										<div class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open" aria-expanded="true" aria-haspopup="listbox" role="combobox">
+											<!-- Search Input -->
+											<div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right" role="none">
+												<lightning-input class="inputBox" placeholder="Select an Option" onblur={blurEvent} onclick={showOptions} onkeyup={filterOptions} value={searchString} auto-complete="off"  label="Module" id="combobox-id-3" ></lightning-input>
+												<lightning-icon class="slds-input__icon" icon-name="utility:down" size="xx-small" alternative-text="search" style="padding-top: 10px;"></lightning-icon>
+											</div>
+											<!-- Dropdown List -->
+											<template if:true={showDropdown}>
+												<div id="listbox-id-4" class="slds-dropdown slds-dropdown_length-5 slds-dropdown_fluid">
+													<ul class="slds-listbox slds-listbox_vertical recordListBox" role="presentation">
+														<template if:false={message} >
+															<template for:each={optionData} for:item="option">
+																<template if:true={option.isVisible}>
+																	<li key={option.value} data-id={option.value} onmousedown={selectItem} class="slds-listbox__item eachItem">
+																		<template if:true={option.selected}>
+																			<lightning-icon icon-name="utility:check" size="xx-small" alternative-text="icon" ></lightning-icon>
+																		</template>
+																		<span class="slds-media slds-listbox__option_entity verticalAlign slds-truncate">{option.label}</span>
+																	</li>
+																</template>
+															</template>
+														</template>
+														<template if:true={message} >
+															<li class="slds-listbox__item">
+																<span class="slds-media slds-listbox__option_entity verticalAlign slds-truncate">{message}</span>
+															</li>
+														</template>
+													</ul>
+												</div>
+											</template>
+										</div>
+									</div>
+									<!-- Multi Select Pills -->
+									<template for:each={optionData} for:item="option">
+										<template if:true={option.selected}>
+											<lightning-pill key={option.value} class="slds-m-around_xx-small" name={option.value} label={option.label} onremove={removePill}></lightning-pill>
+										</template>
+									</template>
+										
+										
+									</div>
+								</div>
+								
+								
+								
+								
+								
+									<div class="slds-float_right">
+									<lightning-button
+										class="slds-m-top_small "
+										onclick={addNewComment}
+										label="Save"
+									>
+									</lightning-button>
+									
+									<lightning-button label="Cancel" onclick={hideModalBox} class="slds-m-left_x-small"></lightning-button>
+									</div>
+								
+							  </div>
+						   </div>
+						</section>
+						<div class="slds-backdrop slds-backdrop_open"></div>
+						
+						
+					</template>
+                </lightning-tab>
+                <lightning-tab label="Question Bank">
+                    <c-zec_-question-bank></c-zec_-question-bank>
+                </lightning-tab>
+                <lightning-tab label="Manage S3 Bucket">
+                    <c-zec_-manage-aws-bucket></c-zec_-manage-aws-bucket>
+                </lightning-tab>
+            </lightning-tabset>
+        
+        
+        
+    </div>
+</template>

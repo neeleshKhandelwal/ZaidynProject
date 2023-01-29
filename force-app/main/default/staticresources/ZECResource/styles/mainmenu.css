@@ -1,0 +1,35 @@
+.fl {
+    text-align: center;
+	margin: 15px 0;
+}
+.pure-menu-children{
+	top: 20px!important;
+}
+.pure-menu-item .pure-menu-item {
+    padding: 10px 0;
+}
+.afl{
+	white-space: break-spaces!important;
+	color: #fff!important;
+}
+.pure-menu-link:hover {
+    background-color: unset!important;
+}
+.slds-button_icon-bare {
+    color: #fff!important;
+}
+.pure-menu{
+	width:80px;
+}
+li.pure-menu-item.fl:hover {
+    background: #B2B0B6;
+}
+.td, th {
+    padding: 12px;
+}
+.aiconb button{
+    color:#666666!important;
+}
+.slds-cell-edit__button button{
+    color: #666666!important
+}
